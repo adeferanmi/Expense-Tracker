@@ -7,7 +7,7 @@ export default function Home(){
 
       <nav>
         <Link href="/">Home</Link> |{" "}
-        <Link href="/add-expenses">Add Expenses</Link> |{" "}
+        <Link href="/add-expense">Add Expenses</Link> |{" "}
         <Link href="/expenses">View Expenses</Link>
       </nav>
 
