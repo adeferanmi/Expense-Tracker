@@ -13,7 +13,7 @@ export default function AddExpense(){
                 <Link href="/expenses">View Expenses</Link>
             </nav>
 
-            <p>Form to add/delete expenses to be added later.</p>
+            <p>Form to add the expenses to be added later.</p>
         </main>
     ); 
 }
