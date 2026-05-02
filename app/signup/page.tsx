@@ -8,11 +8,11 @@ export default function Signup(){
             <h2>Sign Up</h2>
 
             <nav>
-                <Link href="/">Home</Link> |{" "}
-                <Link href="/add-expense">Add Expenses</Link> |{" "}
-                <Link href="/expenses">View Expenses</Link> |{" "}
-                <Link href="/login">Login</Link> |{" "}
-                <Link href="/signup">Signup</Link> |{" "}
+                <Link href="/">Home</Link>
+                <Link href="/add-expense">Add Expenses</Link>
+                <Link href="/expenses">View Expenses</Link>
+                <Link href="/login">Login</Link>
+                <Link href="/signup">Signup</Link>
             </nav>
 
             <form>
