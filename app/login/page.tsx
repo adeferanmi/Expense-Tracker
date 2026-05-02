@@ -11,22 +11,22 @@ export default function Login(){
             <Link href="/add-expense">Add Expenses</Link> |{" "}
             <Link href="/expenses">View Expenses</Link> |{" "}
             <Link href="/login">Login</Link> |{" "}
-            <Link href="/">Signup</Link> |{" "}
+            <Link href="/signup">Signup</Link> |{" "}
         </nav>
 
         <form>
             <div>
-                <p>Email</p>
+                <p>Email: </p>
                 <input type="email" placeholder="example@mail.com"/>
             </div>
             <div>
-                <p>Password</p>
+                <p>Password: </p>
                 <input type="password" placeholder="Enter your password"/>
             </div>
             <button type="submit">Login</button>
         </form>
 
-        <p>Don't have an account? <Link href="/">Sign up</Link></p>
+        <p>Don't have an account? <Link href="/signup">Sign up</Link></p>
       </main>  
     );
 }
