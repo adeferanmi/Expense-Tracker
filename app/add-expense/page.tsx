@@ -1,19 +1,12 @@
 "use client";
-
-import Link from "next/link";
+import Navbar from "../../components/Navbar";
 
 export default function AddExpense(){
     return(
         <main>
             <h2>Add Expenses</h2>
 
-            <nav>
-                <Link href="/">Home</Link>
-                <Link href="/add-expense">Add Expenses</Link>
-                <Link href="/expenses">View Expenses</Link>
-                <Link href="/login">Login</Link>
-                <Link href="/signup">Signup</Link>
-            </nav>
+            <Navbar/>
 
             <p>Form to add the expenses to be added later.</p>
         </main>
