@@ -9,11 +9,11 @@ app.use(express.json());
 
 // test route
 app.get("/test", async (req, res) => {
-  const users = await prisma.user.findMany();
-  res.json(users);
+  const expenses = await prisma.expense.findMany();
+  res.json(expenses);
 });
 
-const PORT = 3000;
+const PORT = 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
