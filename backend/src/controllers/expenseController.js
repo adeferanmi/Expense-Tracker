@@ -74,7 +74,7 @@ const updateExpense = async (req, res) => {
     const amount = 12000;
     const category = "Updated Category";
     */
-   
+
     const updatedExpense = await prisma.expense.update({
       where: {
         id: Number(id),
@@ -96,9 +96,31 @@ const updateExpense = async (req, res) => {
   }
 };
 
+const getExpenseSummary = async (req, res) => {
+  try {
+    const expenses = await prisma.expense.findMany();
+
+    const totalExpenses = expenses.reduce((sum, expense) => {
+      return sum + expense.amount;
+    }, 0);
+
+    res.json({
+      totalExpenses,
+      totalTransactions: expenses.length,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to fetch expense summary",
+    });
+  }
+};
+
 module.exports = {
   createExpense,
   getExpenses,
   deleteExpense,
   updateExpense,
+  getExpenseSummary,
 };
