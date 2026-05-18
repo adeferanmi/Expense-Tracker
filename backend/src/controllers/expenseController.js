@@ -23,6 +23,25 @@ const createExpense = async (req, res) => {
   }
 };
 
+const getExpenses = async (req, res) => {
+  try {
+    const expenses = await prisma.expense.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    res.json(expenses);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to fetch expenses",
+    });
+  }
+};
+
 module.exports = {
   createExpense,
+  getExpenses,
 };
