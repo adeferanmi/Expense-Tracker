@@ -117,10 +117,42 @@ const getExpenseSummary = async (req, res) => {
   }
 };
 
+const getCategorySummary = async (req, res) => {
+  try {
+    const expenses = await prisma.expense.findMany();
+
+    const categoryTotals = {};
+
+    expenses.forEach((expense) => {
+      if (categoryTotals[expense.category]) {
+        categoryTotals[expense.category] += expense.amount;
+      } else {
+        categoryTotals[expense.category] = expense.amount;
+      }
+    });
+
+    const formattedSummary = Object.keys(categoryTotals).map(
+      (category) => ({
+        category,
+        total: categoryTotals[category],
+      })
+    );
+
+    res.json(formattedSummary);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to fetch category summary",
+    });
+  }
+};
+
 module.exports = {
   createExpense,
   getExpenses,
   deleteExpense,
   updateExpense,
   getExpenseSummary,
+  getCategorySummary,
 };
