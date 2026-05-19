@@ -1,6 +1,6 @@
 const prisma = require("../prisma");
 
-const createExpense = async (req, res) => {
+const createExpense = async (req, res, next) => {
   try {
     const title = "Transport";
     const amount = 5000;
@@ -16,15 +16,15 @@ const createExpense = async (req, res) => {
 
     res.status(201).json(expense);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "Failed to create expense",
-    });
+    next(error);
   }
 };
 
-const getExpenses = async (req, res) => {
+const getExpenses = async (req, res, next) => {
   try {
+
+    //throw new Error("Middleware test successful"); //testing
+
     const expenses = await prisma.expense.findMany({
       orderBy: {
         createdAt: "desc",
@@ -33,15 +33,11 @@ const getExpenses = async (req, res) => {
 
     res.json(expenses);
   } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: "Failed to fetch expenses",
-    });
+      next(error);
   }
 };
 
-const deleteExpense = async (req, res) => {
+const deleteExpense = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -55,15 +51,11 @@ const deleteExpense = async (req, res) => {
       message: "Expense deleted successfully",
     });
   } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: "Failed to delete expense",
-    });
+    next(error);
   }
 };
 
-const updateExpense = async (req, res) => {
+const updateExpense = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -88,15 +80,11 @@ const updateExpense = async (req, res) => {
 
     res.json(updatedExpense);
   } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: "Failed to update expense",
-    });
+    next(error);
   }
 };
 
-const getExpenseSummary = async (req, res) => {
+const getExpenseSummary = async (req, res, next) => {
   try {
     const expenses = await prisma.expense.findMany();
 
@@ -109,11 +97,57 @@ const getExpenseSummary = async (req, res) => {
       totalTransactions: expenses.length,
     });
   } catch (error) {
-    console.error(error);
+    next(error);
+  }
+};
 
-    res.status(500).json({
-      message: "Failed to fetch expense summary",
+const getCategorySummary = async (req, res, next) => {
+  try {
+    const expenses = await prisma.expense.findMany();
+
+    const categoryTotals = {};
+
+    expenses.forEach((expense) => {
+      if (categoryTotals[expense.category]) {
+        categoryTotals[expense.category] += expense.amount;
+      } else {
+        categoryTotals[expense.category] = expense.amount;
+      }
     });
+
+    const formattedSummary = Object.keys(categoryTotals).map(
+      (category) => ({
+        category,
+        total: categoryTotals[category],
+      })
+    );
+
+    res.json(formattedSummary);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getExpenseById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const expense = await prisma.expense.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!expense) {
+      return res.status(404).json({
+        message: "Expense not found",
+      });
+    }
+
+    res.json(expense);
+
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -123,4 +157,6 @@ module.exports = {
   deleteExpense,
   updateExpense,
   getExpenseSummary,
+  getCategorySummary,
+  getExpenseById,
 };
