@@ -3,12 +3,20 @@ const prisma = require("../prisma");
 const createExpense = async (req, res, next) => {
   try {
     const { title, amount, category } = req.body;
-    
+
+    const userId = req.user.userId;
+
     const expense = await prisma.expense.create({
       data: {
         title,
         amount,
         category,
+
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
       },
     });
 
