@@ -23,7 +23,12 @@ const createExpense = async (req, res, next) => {
 const getExpenses = async (req, res, next) => {
   try {
 
-    const { category, minAmount } = req.query;
+    const {
+      category,
+      minAmount,
+      page = 1,
+      limit = 5,
+    } = req.query;
 
     const filters = {};
 
@@ -43,6 +48,10 @@ const getExpenses = async (req, res, next) => {
       orderBy: {
         createdAt: "desc",
       },
+
+      skip: (Number(page) - 1) * Number(limit),
+
+      take: Number(limit),
     });
 
     res.json(expenses);
