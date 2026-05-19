@@ -23,8 +23,11 @@ const createExpense = async (req, res) => {
   }
 };
 
-const getExpenses = async (req, res) => {
+const getExpenses = async (req, res, next) => {
   try {
+
+    throw new Error("Middleware test successful");
+
     const expenses = await prisma.expense.findMany({
       orderBy: {
         createdAt: "desc",
@@ -33,11 +36,7 @@ const getExpenses = async (req, res) => {
 
     res.json(expenses);
   } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: "Failed to fetch expenses",
-    });
+      next(error);
   }
 };
 
