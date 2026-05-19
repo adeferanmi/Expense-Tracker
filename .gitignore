@@ -44,4 +44,4 @@ backend/.env*
 next-env.d.ts
 
 #postman
-backend/.postman/
+.postman/
