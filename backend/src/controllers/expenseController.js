@@ -30,6 +30,8 @@ const getExpenses = async (req, res, next) => {
       limit = 5,
       sort = "desc",
       search,
+      startDate,
+      endDate,
     } = req.query;
 
     const filters = {};
@@ -49,6 +51,19 @@ const getExpenses = async (req, res, next) => {
       contains: search,
       mode: "insensitive",
       };
+    }
+
+    if (startDate || endDate) {
+
+      filters.createdAt = {};
+
+      if (startDate) {
+        filters.createdAt.gte = new Date(startDate);
+      }
+
+      if (endDate) {
+        filters.createdAt.lte = new Date(endDate);
+      }
     }
 
     const expenses = await prisma.expense.findMany({
