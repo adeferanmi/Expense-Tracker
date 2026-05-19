@@ -1,0 +1,33 @@
+const prisma = require("../prisma");
+
+const createBudget = async (req, res, next) => {
+  try {
+
+    const { category, limit, month } = req.body;
+
+    const userId = req.user.userId;
+
+    const budget = await prisma.budget.create({
+      data: {
+        category,
+        limit,
+        month,
+
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+
+    res.status(201).json(budget);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  createBudget,
+};
