@@ -29,6 +29,7 @@ const getExpenses = async (req, res, next) => {
       page = 1,
       limit = 5,
       sort = "desc",
+      search,
     } = req.query;
 
     const filters = {};
@@ -40,6 +41,13 @@ const getExpenses = async (req, res, next) => {
     if (minAmount) {
       filters.amount = {
         gte: Number(minAmount),
+      };
+    }
+
+    if (search) {
+      filters.title = {
+      contains: search,
+      mode: "insensitive",
       };
     }
 
