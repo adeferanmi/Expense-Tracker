@@ -28,6 +28,10 @@ const getExpenses = async (req, res, next) => {
       minAmount,
       page = 1,
       limit = 5,
+      sort = "desc",
+      search,
+      startDate,
+      endDate,
     } = req.query;
 
     const filters = {};
@@ -42,11 +46,31 @@ const getExpenses = async (req, res, next) => {
       };
     }
 
+    if (search) {
+      filters.title = {
+      contains: search,
+      mode: "insensitive",
+      };
+    }
+
+    if (startDate || endDate) {
+
+      filters.createdAt = {};
+
+      if (startDate) {
+        filters.createdAt.gte = new Date(startDate);
+      }
+
+      if (endDate) {
+        filters.createdAt.lte = new Date(endDate);
+      }
+    }
+
     const expenses = await prisma.expense.findMany({
       where: filters,
 
       orderBy: {
-        createdAt: "desc",
+        createdAt: sort,
       },
 
       skip: (Number(page) - 1) * Number(limit),
@@ -152,6 +176,84 @@ const getCategorySummary = async (req, res, next) => {
   }
 };
 
+const getMonthlySummary = async (req, res, next) => {
+  try {
+
+    const expenses = await prisma.expense.findMany();
+
+    const monthlyTotals = {};
+
+    expenses.forEach((expense) => {
+
+      const date = new Date(expense.createdAt);
+
+      const monthKey = `${date.getFullYear()}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}`;
+
+      if (monthlyTotals[monthKey]) {
+        monthlyTotals[monthKey] += expense.amount;
+      } else {
+        monthlyTotals[monthKey] = expense.amount;
+      }
+    });
+
+    const formattedSummary = Object.keys(monthlyTotals).map(
+      (month) => ({
+        month,
+        total: monthlyTotals[month],
+      })
+    );
+
+    res.json(formattedSummary);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getExpenseStats = async (req, res, next) => {
+  try {
+
+    const expenses = await prisma.expense.findMany();
+
+    if (expenses.length === 0) {
+      return res.json({
+        totalExpenses: 0,
+        averageExpense: 0,
+        highestExpense: 0,
+        lowestExpense: 0,
+        totalTransactions: 0,
+      });
+    }
+
+    const amounts = expenses.map((expense) => expense.amount);
+
+    const totalExpenses = amounts.reduce(
+      (sum, amount) => sum + amount,
+      0
+    );
+
+    const averageExpense =
+      totalExpenses / amounts.length;
+
+    const highestExpense = Math.max(...amounts);
+
+    const lowestExpense = Math.min(...amounts);
+
+    res.json({
+      totalExpenses,
+      averageExpense,
+      highestExpense,
+      lowestExpense,
+      totalTransactions: expenses.length,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getExpenseById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -182,5 +284,7 @@ module.exports = {
   updateExpense,
   getExpenseSummary,
   getCategorySummary,
+  getMonthlySummary,
+  getExpenseStats,
   getExpenseById,
 };

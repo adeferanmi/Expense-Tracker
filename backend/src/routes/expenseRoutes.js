@@ -8,6 +8,8 @@ const {
   updateExpense,
   getExpenseSummary,
   getCategorySummary,
+  getMonthlySummary,
+  getExpenseStats,
   getExpenseById,
 } = require("../controllers/expenseController");
 
@@ -20,6 +22,10 @@ router.get("/", getExpenses);
 router.get("/summary", getExpenseSummary);
 
 router.get("/category-summary", getCategorySummary);
+
+router.get("/monthly-summary", getMonthlySummary);
+
+router.get("/stats", getExpenseStats);
 
 router.get("/:id", getExpenseById);
 
