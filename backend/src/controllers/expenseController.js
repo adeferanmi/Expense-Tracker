@@ -212,6 +212,48 @@ const getMonthlySummary = async (req, res, next) => {
   }
 };
 
+const getExpenseStats = async (req, res, next) => {
+  try {
+
+    const expenses = await prisma.expense.findMany();
+
+    if (expenses.length === 0) {
+      return res.json({
+        totalExpenses: 0,
+        averageExpense: 0,
+        highestExpense: 0,
+        lowestExpense: 0,
+        totalTransactions: 0,
+      });
+    }
+
+    const amounts = expenses.map((expense) => expense.amount);
+
+    const totalExpenses = amounts.reduce(
+      (sum, amount) => sum + amount,
+      0
+    );
+
+    const averageExpense =
+      totalExpenses / amounts.length;
+
+    const highestExpense = Math.max(...amounts);
+
+    const lowestExpense = Math.min(...amounts);
+
+    res.json({
+      totalExpenses,
+      averageExpense,
+      highestExpense,
+      lowestExpense,
+      totalTransactions: expenses.length,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getExpenseById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -243,5 +285,6 @@ module.exports = {
   getExpenseSummary,
   getCategorySummary,
   getMonthlySummary,
+  getExpenseStats,
   getExpenseById,
 };
