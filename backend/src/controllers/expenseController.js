@@ -40,7 +40,11 @@ const getExpenses = async (req, res, next) => {
       endDate,
     } = req.query;
 
-    const filters = {};
+    const userId = req.user.userId;
+
+    const filters = {
+      userId,
+    };
 
     if (category) {
       filters.category = category;
@@ -93,7 +97,23 @@ const getExpenses = async (req, res, next) => {
 
 const deleteExpense = async (req, res, next) => {
   try {
+
     const { id } = req.params;
+
+    const userId = req.user.userId;
+
+    const expense = await prisma.expense.findFirst({
+      where: {
+        id: Number(id),
+        userId,
+      },
+    });
+
+    if (!expense) {
+      return res.status(404).json({
+        message: "Expense not found",
+      });
+    }
 
     await prisma.expense.delete({
       where: {
@@ -104,6 +124,7 @@ const deleteExpense = async (req, res, next) => {
     res.json({
       message: "Expense deleted successfully",
     });
+
   } catch (error) {
     next(error);
   }
@@ -111,28 +132,42 @@ const deleteExpense = async (req, res, next) => {
 
 const updateExpense = async (req, res, next) => {
   try {
+
     const { id } = req.params;
+
+    const userId = req.user.userId;
 
     const { title, amount, category } = req.body;
 
-    /* 
-    const title = "Updated Expense";
-    const amount = 12000;
-    const category = "Updated Category";
-    */
+    const existingExpense =
+      await prisma.expense.findFirst({
+        where: {
+          id: Number(id),
+          userId,
+        },
+      });
 
-    const updatedExpense = await prisma.expense.update({
-      where: {
-        id: Number(id),
-      },
-      data: {
-        title,
-        amount,
-        category,
-      },
-    });
+    if (!existingExpense) {
+      return res.status(404).json({
+        message: "Expense not found",
+      });
+    }
+
+    const updatedExpense =
+      await prisma.expense.update({
+        where: {
+          id: Number(id),
+        },
+
+        data: {
+          title,
+          amount,
+          category,
+        },
+      });
 
     res.json(updatedExpense);
+
   } catch (error) {
     next(error);
   }
@@ -264,9 +299,12 @@ const getExpenseById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
+    const userId = req.user.userId;
+
     const expense = await prisma.expense.findUnique({
       where: {
         id: Number(id),
+        userId,
       },
     });
 
