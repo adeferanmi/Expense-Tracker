@@ -2,10 +2,8 @@ const prisma = require("../prisma");
 
 const createExpense = async (req, res, next) => {
   try {
-    const title = "Transport";
-    const amount = 5000;
-    const category = "Travel";
-
+    const { title, amount, category } = req.body;
+    
     const expense = await prisma.expense.create({
       data: {
         title,
