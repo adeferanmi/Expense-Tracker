@@ -1,6 +1,6 @@
 const prisma = require("../prisma");
 
-const createExpense = async (req, res) => {
+const createExpense = async (req, res, next) => {
   try {
     const title = "Transport";
     const amount = 5000;
@@ -16,32 +16,76 @@ const createExpense = async (req, res) => {
 
     res.status(201).json(expense);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "Failed to create expense",
-    });
+    next(error);
   }
 };
 
-const getExpenses = async (req, res) => {
+const getExpenses = async (req, res, next) => {
   try {
+
+    const {
+      category,
+      minAmount,
+      page = 1,
+      limit = 5,
+      sort = "desc",
+      search,
+      startDate,
+      endDate,
+    } = req.query;
+
+    const filters = {};
+
+    if (category) {
+      filters.category = category;
+    }
+
+    if (minAmount) {
+      filters.amount = {
+        gte: Number(minAmount),
+      };
+    }
+
+    if (search) {
+      filters.title = {
+      contains: search,
+      mode: "insensitive",
+      };
+    }
+
+    if (startDate || endDate) {
+
+      filters.createdAt = {};
+
+      if (startDate) {
+        filters.createdAt.gte = new Date(startDate);
+      }
+
+      if (endDate) {
+        filters.createdAt.lte = new Date(endDate);
+      }
+    }
+
     const expenses = await prisma.expense.findMany({
+      where: filters,
+
       orderBy: {
-        createdAt: "desc",
+        createdAt: sort,
       },
+
+      skip: (Number(page) - 1) * Number(limit),
+
+      take: Number(limit),
     });
 
     res.json(expenses);
-  } catch (error) {
-    console.error(error);
 
-    res.status(500).json({
-      message: "Failed to fetch expenses",
-    });
+  } catch (error) {
+    next(error);
   }
 };
 
-const deleteExpense = async (req, res) => {
+const deleteExpense = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -55,15 +99,11 @@ const deleteExpense = async (req, res) => {
       message: "Expense deleted successfully",
     });
   } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: "Failed to delete expense",
-    });
+    next(error);
   }
 };
 
-const updateExpense = async (req, res) => {
+const updateExpense = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -88,15 +128,11 @@ const updateExpense = async (req, res) => {
 
     res.json(updatedExpense);
   } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: "Failed to update expense",
-    });
+    next(error);
   }
 };
 
-const getExpenseSummary = async (req, res) => {
+const getExpenseSummary = async (req, res, next) => {
   try {
     const expenses = await prisma.expense.findMany();
 
@@ -109,11 +145,135 @@ const getExpenseSummary = async (req, res) => {
       totalTransactions: expenses.length,
     });
   } catch (error) {
-    console.error(error);
+    next(error);
+  }
+};
 
-    res.status(500).json({
-      message: "Failed to fetch expense summary",
+const getCategorySummary = async (req, res, next) => {
+  try {
+    const expenses = await prisma.expense.findMany();
+
+    const categoryTotals = {};
+
+    expenses.forEach((expense) => {
+      if (categoryTotals[expense.category]) {
+        categoryTotals[expense.category] += expense.amount;
+      } else {
+        categoryTotals[expense.category] = expense.amount;
+      }
     });
+
+    const formattedSummary = Object.keys(categoryTotals).map(
+      (category) => ({
+        category,
+        total: categoryTotals[category],
+      })
+    );
+
+    res.json(formattedSummary);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getMonthlySummary = async (req, res, next) => {
+  try {
+
+    const expenses = await prisma.expense.findMany();
+
+    const monthlyTotals = {};
+
+    expenses.forEach((expense) => {
+
+      const date = new Date(expense.createdAt);
+
+      const monthKey = `${date.getFullYear()}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}`;
+
+      if (monthlyTotals[monthKey]) {
+        monthlyTotals[monthKey] += expense.amount;
+      } else {
+        monthlyTotals[monthKey] = expense.amount;
+      }
+    });
+
+    const formattedSummary = Object.keys(monthlyTotals).map(
+      (month) => ({
+        month,
+        total: monthlyTotals[month],
+      })
+    );
+
+    res.json(formattedSummary);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getExpenseStats = async (req, res, next) => {
+  try {
+
+    const expenses = await prisma.expense.findMany();
+
+    if (expenses.length === 0) {
+      return res.json({
+        totalExpenses: 0,
+        averageExpense: 0,
+        highestExpense: 0,
+        lowestExpense: 0,
+        totalTransactions: 0,
+      });
+    }
+
+    const amounts = expenses.map((expense) => expense.amount);
+
+    const totalExpenses = amounts.reduce(
+      (sum, amount) => sum + amount,
+      0
+    );
+
+    const averageExpense =
+      totalExpenses / amounts.length;
+
+    const highestExpense = Math.max(...amounts);
+
+    const lowestExpense = Math.min(...amounts);
+
+    res.json({
+      totalExpenses,
+      averageExpense,
+      highestExpense,
+      lowestExpense,
+      totalTransactions: expenses.length,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getExpenseById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const expense = await prisma.expense.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!expense) {
+      return res.status(404).json({
+        message: "Expense not found",
+      });
+    }
+
+    res.json(expense);
+
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -123,4 +283,8 @@ module.exports = {
   deleteExpense,
   updateExpense,
   getExpenseSummary,
+  getCategorySummary,
+  getMonthlySummary,
+  getExpenseStats,
+  getExpenseById,
 };

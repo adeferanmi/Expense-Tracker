@@ -1,4 +1,5 @@
 const express = require("express");
+const validateExpense = require("../middleware/validateExpense");
 
 const {
   createExpense,
@@ -6,18 +7,34 @@ const {
   deleteExpense,
   updateExpense,
   getExpenseSummary,
+  getCategorySummary,
+  getMonthlySummary,
+  getExpenseStats,
+  getExpenseById,
 } = require("../controllers/expenseController");
 
 const router = express.Router();
 
-router.post("/", createExpense);
+router.post("/", validateExpense, createExpense);
+
 router.get("/", getExpenses);
+
 router.get("/summary", getExpenseSummary);
+
+router.get("/category-summary", getCategorySummary);
+
+router.get("/monthly-summary", getMonthlySummary);
+
+router.get("/stats", getExpenseStats);
+
+router.get("/:id", getExpenseById);
+
 router.delete("/:id", deleteExpense); //browser cannot directly delete expense, this will be called from frontend when user clicks delete button, so we can comment this out for now
+
 
 //router.get("/delete/:id", deleteExpense); //for testing on browser
 
-router.put("/:id", updateExpense);
+router.put("/:id", validateExpense, updateExpense);
 
 //router.get("/update/:id", updateExpense); //for testing on browser
 
