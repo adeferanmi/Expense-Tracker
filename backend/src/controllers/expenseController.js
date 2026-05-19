@@ -23,17 +23,32 @@ const createExpense = async (req, res, next) => {
 const getExpenses = async (req, res, next) => {
   try {
 
-    //throw new Error("Middleware test successful"); //testing
+    const { category, minAmount } = req.query;
+
+    const filters = {};
+
+    if (category) {
+      filters.category = category;
+    }
+
+    if (minAmount) {
+      filters.amount = {
+        gte: Number(minAmount),
+      };
+    }
 
     const expenses = await prisma.expense.findMany({
+      where: filters,
+
       orderBy: {
         createdAt: "desc",
       },
     });
 
     res.json(expenses);
+
   } catch (error) {
-      next(error);
+    next(error);
   }
 };
 
