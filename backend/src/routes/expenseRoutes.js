@@ -1,5 +1,6 @@
 const express = require("express");
 const validateExpense = require("../middleware/validateExpense");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const {
   createExpense,
@@ -14,6 +15,8 @@ const {
 } = require("../controllers/expenseController");
 
 const router = express.Router();
+
+router.use(authMiddleware);
 
 router.post("/", validateExpense, createExpense);
 
