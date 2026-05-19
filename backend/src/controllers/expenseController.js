@@ -28,6 +28,7 @@ const getExpenses = async (req, res, next) => {
       minAmount,
       page = 1,
       limit = 5,
+      sort = "desc",
     } = req.query;
 
     const filters = {};
@@ -46,7 +47,7 @@ const getExpenses = async (req, res, next) => {
       where: filters,
 
       orderBy: {
-        createdAt: "desc",
+        createdAt: sort,
       },
 
       skip: (Number(page) - 1) * Number(limit),
