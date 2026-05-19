@@ -153,6 +153,42 @@ const getCategorySummary = async (req, res, next) => {
   }
 };
 
+const getMonthlySummary = async (req, res, next) => {
+  try {
+
+    const expenses = await prisma.expense.findMany();
+
+    const monthlyTotals = {};
+
+    expenses.forEach((expense) => {
+
+      const date = new Date(expense.createdAt);
+
+      const monthKey = `${date.getFullYear()}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}`;
+
+      if (monthlyTotals[monthKey]) {
+        monthlyTotals[monthKey] += expense.amount;
+      } else {
+        monthlyTotals[monthKey] = expense.amount;
+      }
+    });
+
+    const formattedSummary = Object.keys(monthlyTotals).map(
+      (month) => ({
+        month,
+        total: monthlyTotals[month],
+      })
+    );
+
+    res.json(formattedSummary);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getExpenseById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -183,5 +219,6 @@ module.exports = {
   updateExpense,
   getExpenseSummary,
   getCategorySummary,
+  getMonthlySummary,
   getExpenseById,
 };
