@@ -1,12 +1,51 @@
-import Navbar from "../components/Navbar";
+"use client";
+import { useState } from "react";
+import Link from "next/link";
 
-export default function Home(){
-  return(
-    <main>
-      <h2>Expense Tracker Homepage</h2>
-      <Navbar/>
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-      <p>Welcome! This is an app to track your daily spending.</p>
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    console.log("Login attempt:", { email, password });
+  };
+
+  return (
+    <main className="auth-container">
+      <div className="auth-card">
+        <h2 className="auth-title">Welcome Back 👋</h2>
+
+        <p className="auth-subtitle">Please log in to continue:</p>
+
+        <form className="auth-form" onSubmit={handleLogin}>
+          
+          <input
+            className="auth-input"
+            type="email"
+            placeholder="example@mail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <input
+            className="auth-input"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button className="auth-button" type="submit">
+            Login
+          </button>
+        </form>
+
+        <p className="auth-footer-text">
+          Don&apos;t have an account? <Link className="auth-link" href="/signup">Sign up</Link>
+        </p>
+      </div>
     </main>
   );
 }
