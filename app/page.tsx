@@ -1,12 +1,5 @@
-import Navbar from "../components/Navbar";
+import { redirect } from "next/navigation";
 
-export default function Home(){
-  return(
-    <main>
-      <h2>Expense Tracker Homepage</h2>
-      <Navbar/>
-
-      <p>Welcome! This is an app to track your daily spending.</p>
-    </main>
-  );
+export default function Home() {
+  redirect("/login");
 }
