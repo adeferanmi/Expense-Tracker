@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -15,8 +16,11 @@ export default function LoginPage() {
   return (
     <main className="auth-container">
       <div className="auth-card">
+
         <h2 className="auth-title">Welcome Back 👋</h2>
 
+        <Image src="/favicon.png" alt="App Logo" width={60}height={60} className="auth-logo"/>
+        
         <p className="auth-subtitle">Please log in to continue:</p>
 
         <form className="auth-form" onSubmit={handleLogin}>

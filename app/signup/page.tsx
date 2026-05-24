@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -21,7 +21,9 @@ export default function Signup() {
   return (
     <main className="auth-container">
       <div className="auth-card">
-        <h2>Join Us</h2>
+        <h2 className="auth-title">Join Us</h2>
+
+        <Image src="/favicon.png" alt="App Logo" width={60}height={60} className="auth-logo"/>
 
         <p>Create your account to continue:</p>
 

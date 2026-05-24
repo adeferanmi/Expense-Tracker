@@ -93,6 +93,20 @@ body {
   color: white;
 }
 
+.auth-title {
+  display: block;
+  text-align: center;
+}
+
+.auth-logo {
+  display: block;
+  margin: 0 auto 12px auto;
+
+  border-radius: 14px;
+
+  filter: drop-shadow(0 0 10px rgba(255, 79, 205, 0.6));
+}
+
 .auth-form {
   display: flex;
   flex-direction: column;
