@@ -198,3 +198,28 @@ body {
 .auth-link:hover {
   opacity: 0.8;
 }
+
+/*NAVBAR STYLING*/
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #ff8ad4;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-text {
+  margin: 0;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 15px;
+}
