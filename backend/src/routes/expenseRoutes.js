@@ -7,10 +7,6 @@ const {
   getExpenses,
   deleteExpense,
   updateExpense,
-  getExpenseSummary,
-  getCategorySummary,
-  getMonthlySummary,
-  getExpenseStats,
   getExpenseById,
   getExpenseAnalytics,
 } = require("../controllers/expenseController");
