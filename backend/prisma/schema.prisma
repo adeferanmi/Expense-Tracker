@@ -7,10 +7,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+
+  expenses  Expense[]
+  budgets   Budget[]
+}
+
 model Expense {
   id        Int      @id @default(autoincrement())
   title     String
   amount    Float
   category  String
   createdAt DateTime @default(now())
+  isRecurring Boolean @default(false)
+  recurringInterval String?
+
+  userId    Int
+  user      User @relation(fields: [userId], references: [id])
+}
+
+model Budget {
+  id        Int      @id @default(autoincrement())
+  category  String
+  limit     Float
+  month     String
+  createdAt DateTime @default(now())
+
+  userId    Int
+  user      User @relation(fields: [userId], references: [id])
 }

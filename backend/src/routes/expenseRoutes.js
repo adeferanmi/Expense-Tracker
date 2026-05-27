@@ -1,31 +1,25 @@
 const express = require("express");
 const validateExpense = require("../middleware/validateExpense");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const {
   createExpense,
   getExpenses,
   deleteExpense,
   updateExpense,
-  getExpenseSummary,
-  getCategorySummary,
-  getMonthlySummary,
-  getExpenseStats,
   getExpenseById,
+  getExpenseAnalytics,
 } = require("../controllers/expenseController");
 
 const router = express.Router();
+
+router.use(authMiddleware);
 
 router.post("/", validateExpense, createExpense);
 
 router.get("/", getExpenses);
 
-router.get("/summary", getExpenseSummary);
-
-router.get("/category-summary", getCategorySummary);
-
-router.get("/monthly-summary", getMonthlySummary);
-
-router.get("/stats", getExpenseStats);
+router.get("/analytics", getExpenseAnalytics);
 
 router.get("/:id", getExpenseById);
 

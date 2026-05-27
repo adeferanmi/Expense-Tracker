@@ -2,15 +2,23 @@ const prisma = require("../prisma");
 
 const createExpense = async (req, res, next) => {
   try {
-    const title = "Transport";
-    const amount = 5000;
-    const category = "Travel";
+    const { title, amount, category, isRecurring, recurringInterval, } = req.body;
+
+    const userId = req.user.userId;
 
     const expense = await prisma.expense.create({
       data: {
         title,
         amount,
         category,
+        isRecurring,
+        recurringInterval,
+
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
       },
     });
 
@@ -34,7 +42,11 @@ const getExpenses = async (req, res, next) => {
       endDate,
     } = req.query;
 
-    const filters = {};
+    const userId = req.user.userId;
+
+    const filters = {
+      userId,
+    };
 
     if (category) {
       filters.category = category;
@@ -87,7 +99,23 @@ const getExpenses = async (req, res, next) => {
 
 const deleteExpense = async (req, res, next) => {
   try {
+
     const { id } = req.params;
+
+    const userId = req.user.userId;
+
+    const expense = await prisma.expense.findFirst({
+      where: {
+        id: Number(id),
+        userId,
+      },
+    });
+
+    if (!expense) {
+      return res.status(404).json({
+        message: "Expense not found",
+      });
+    }
 
     await prisma.expense.delete({
       where: {
@@ -98,6 +126,7 @@ const deleteExpense = async (req, res, next) => {
     res.json({
       message: "Expense deleted successfully",
     });
+
   } catch (error) {
     next(error);
   }
@@ -105,149 +134,41 @@ const deleteExpense = async (req, res, next) => {
 
 const updateExpense = async (req, res, next) => {
   try {
+
     const { id } = req.params;
+
+    const userId = req.user.userId;
 
     const { title, amount, category } = req.body;
 
-    /* 
-    const title = "Updated Expense";
-    const amount = 12000;
-    const category = "Updated Category";
-    */
+    const existingExpense =
+      await prisma.expense.findFirst({
+        where: {
+          id: Number(id),
+          userId,
+        },
+      });
 
-    const updatedExpense = await prisma.expense.update({
-      where: {
-        id: Number(id),
-      },
-      data: {
-        title,
-        amount,
-        category,
-      },
-    });
-
-    res.json(updatedExpense);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getExpenseSummary = async (req, res, next) => {
-  try {
-    const expenses = await prisma.expense.findMany();
-
-    const totalExpenses = expenses.reduce((sum, expense) => {
-      return sum + expense.amount;
-    }, 0);
-
-    res.json({
-      totalExpenses,
-      totalTransactions: expenses.length,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getCategorySummary = async (req, res, next) => {
-  try {
-    const expenses = await prisma.expense.findMany();
-
-    const categoryTotals = {};
-
-    expenses.forEach((expense) => {
-      if (categoryTotals[expense.category]) {
-        categoryTotals[expense.category] += expense.amount;
-      } else {
-        categoryTotals[expense.category] = expense.amount;
-      }
-    });
-
-    const formattedSummary = Object.keys(categoryTotals).map(
-      (category) => ({
-        category,
-        total: categoryTotals[category],
-      })
-    );
-
-    res.json(formattedSummary);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getMonthlySummary = async (req, res, next) => {
-  try {
-
-    const expenses = await prisma.expense.findMany();
-
-    const monthlyTotals = {};
-
-    expenses.forEach((expense) => {
-
-      const date = new Date(expense.createdAt);
-
-      const monthKey = `${date.getFullYear()}-${String(
-        date.getMonth() + 1
-      ).padStart(2, "0")}`;
-
-      if (monthlyTotals[monthKey]) {
-        monthlyTotals[monthKey] += expense.amount;
-      } else {
-        monthlyTotals[monthKey] = expense.amount;
-      }
-    });
-
-    const formattedSummary = Object.keys(monthlyTotals).map(
-      (month) => ({
-        month,
-        total: monthlyTotals[month],
-      })
-    );
-
-    res.json(formattedSummary);
-
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getExpenseStats = async (req, res, next) => {
-  try {
-
-    const expenses = await prisma.expense.findMany();
-
-    if (expenses.length === 0) {
-      return res.json({
-        totalExpenses: 0,
-        averageExpense: 0,
-        highestExpense: 0,
-        lowestExpense: 0,
-        totalTransactions: 0,
+    if (!existingExpense) {
+      return res.status(404).json({
+        message: "Expense not found",
       });
     }
 
-    const amounts = expenses.map((expense) => expense.amount);
+    const updatedExpense =
+      await prisma.expense.update({
+        where: {
+          id: Number(id),
+        },
 
-    const totalExpenses = amounts.reduce(
-      (sum, amount) => sum + amount,
-      0
-    );
+        data: {
+          title,
+          amount,
+          category,
+        },
+      });
 
-    const averageExpense =
-      totalExpenses / amounts.length;
-
-    const highestExpense = Math.max(...amounts);
-
-    const lowestExpense = Math.min(...amounts);
-
-    res.json({
-      totalExpenses,
-      averageExpense,
-      highestExpense,
-      lowestExpense,
-      totalTransactions: expenses.length,
-    });
+    res.json(updatedExpense);
 
   } catch (error) {
     next(error);
@@ -258,9 +179,12 @@ const getExpenseById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
+    const userId = req.user.userId;
+
     const expense = await prisma.expense.findUnique({
       where: {
         id: Number(id),
+        userId,
       },
     });
 
@@ -277,14 +201,120 @@ const getExpenseById = async (req, res, next) => {
   }
 };
 
+const getExpenseAnalytics = async (
+  req,
+  res,
+  next
+) => {
+  try {
+
+    const userId = req.user.userId;
+
+    const expenses =
+      await prisma.expense.findMany({
+        where: {
+          userId,
+        },
+      });
+
+    // OVERVIEW
+
+    const totalExpenses =
+      expenses.reduce(
+        (sum, expense) =>
+          sum + expense.amount,
+        0
+      );
+
+    const totalTransactions =
+      expenses.length;
+
+    const highestExpense =
+      expenses.length > 0
+        ? Math.max(
+            ...expenses.map(
+              (expense) => expense.amount
+            )
+          )
+        : 0;
+
+    const averageExpense =
+      totalTransactions > 0
+        ? totalExpenses / totalTransactions
+        : 0;
+
+    // CATEGORY BREAKDOWN
+
+    const categoryMap = {};
+
+    expenses.forEach((expense) => {
+
+      if (!categoryMap[expense.category]) {
+        categoryMap[expense.category] = 0;
+      }
+
+      categoryMap[expense.category] += expense.amount;
+    });
+
+    const categoryBreakdown =
+      Object.entries(categoryMap).map(
+        ([category, amount]) => ({
+          category,
+          amount,
+        })
+      );
+
+    // MONTHLY BREAKDOWN
+
+    const monthlyMap = {};
+
+    expenses.forEach((expense) => {
+
+      const month =
+        new Date(expense.createdAt)
+          .toLocaleString("default", {
+            month: "long",
+          });
+
+      if (!monthlyMap[month]) {
+        monthlyMap[month] = 0;
+      }
+
+      monthlyMap[month] += expense.amount;
+    });
+
+    const monthlyBreakdown =
+      Object.entries(monthlyMap).map(
+        ([month, amount]) => ({
+          month,
+          amount,
+        })
+      );
+
+    res.json({
+
+      overview: {
+        totalExpenses,
+        totalTransactions,
+        highestExpense,
+        averageExpense,
+      },
+
+      categoryBreakdown,
+
+      monthlyBreakdown,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createExpense,
   getExpenses,
   deleteExpense,
   updateExpense,
-  getExpenseSummary,
-  getCategorySummary,
-  getMonthlySummary,
-  getExpenseStats,
   getExpenseById,
+  getExpenseAnalytics,
 };
