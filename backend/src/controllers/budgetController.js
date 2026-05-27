@@ -59,6 +59,8 @@ const getBudgetOverview = async (req, res, next) => {
           0
         );
 
+      const remaining = budget.limit - spent;
+
       return {
         category: budget.category,
 
@@ -66,7 +68,12 @@ const getBudgetOverview = async (req, res, next) => {
 
         spent,
 
-        remaining: budget.limit - spent,
+        remaining,
+
+        status:
+          remaining < 0
+            ? "OVER_BUDGET"
+            : "SAFE",
       };
     });
 
