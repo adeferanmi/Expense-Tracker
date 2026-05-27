@@ -15,11 +15,23 @@ html, body {
   box-sizing: border-box;
 }
 
+.page-wrapper {
+  flex: 1;
+}
+
 /*DEFAULT APP STYLE for non-auth pages*/
 body {
   font-family: Arial, Helvetica, sans-serif;
   color: white;
   background: #0b0b1a;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: 290px;
+  padding: 30px;
 }
 
 /* AUTHENTICATION PAGES */
@@ -197,4 +209,104 @@ body {
 
 .auth-link:hover {
   opacity: 0.8;
+}
+
+/*NAVBAR STYLING*/
+
+.navbar {
+  width: 250px;
+  height: 100vh;
+  background: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(184, 9, 123, 0.05);
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px solid hotpink;
+  padding-bottom: 15px;
+}
+
+.nav-logo {
+  display: inline;
+  border: 10px;
+  margin-top: 5px;
+  margin-left: 10px;
+  width: 45px;
+  height: 45px;
+}
+
+h3.nav-text{
+  display: inline;
+  margin-right: 10px;
+}
+
+.nav-text {
+  display: inline;
+  margin: 0;
+  color: black;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.profile-section {
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-top: 60px;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #222;
+  padding: 14px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-link:hover {
+  background: #ff8ad4;
+  transform: translateX(5px);
+}
+
+.sidebar-link.active {
+  background: #ed3ac6;
+  color: white;
+}
+
+.logout {
+  margin-top: 30px;
+}
+
+/*footer*/
+.footer {
+  text-align: center;
+  padding: 0%;
+  margin: 0%;
+  background: white;
+  color: black;
+  border-top: 2px solid #ed3ac6;
 }

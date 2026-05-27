@@ -40,7 +40,7 @@ export default function Signup() {
           <input
             className="auth-input"
             type="email"
-            placeholder="example@mail.com"
+            placeholder="Example@mail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
