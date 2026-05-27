@@ -12,6 +12,7 @@ const {
   getMonthlySummary,
   getExpenseStats,
   getExpenseById,
+  getExpenseAnalytics,
 } = require("../controllers/expenseController");
 
 const router = express.Router();
@@ -22,13 +23,7 @@ router.post("/", validateExpense, createExpense);
 
 router.get("/", getExpenses);
 
-router.get("/summary", getExpenseSummary);
-
-router.get("/category-summary", getCategorySummary);
-
-router.get("/monthly-summary", getMonthlySummary);
-
-router.get("/stats", getExpenseStats);
+router.get("/analytics", getExpenseAnalytics);
 
 router.get("/:id", getExpenseById);
 
