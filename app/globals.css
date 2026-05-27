@@ -22,6 +22,11 @@ body {
   background: #0b0b1a;
 }
 
+.main-content {
+  margin-left: 290px;
+  padding: 30px;
+}
+
 /* AUTHENTICATION PAGES */
 .auth-container {
   min-height: 100vh;
