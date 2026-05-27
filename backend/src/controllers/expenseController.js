@@ -2,7 +2,7 @@ const prisma = require("../prisma");
 
 const createExpense = async (req, res, next) => {
   try {
-    const { title, amount, category } = req.body;
+    const { title, amount, category, isRecurring, recurringInterval, } = req.body;
 
     const userId = req.user.userId;
 
@@ -11,6 +11,8 @@ const createExpense = async (req, res, next) => {
         title,
         amount,
         category,
+        isRecurring,
+        recurringInterval,
 
         user: {
           connect: {
