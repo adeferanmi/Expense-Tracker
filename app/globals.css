@@ -15,11 +15,18 @@ html, body {
   box-sizing: border-box;
 }
 
+.page-wrapper {
+  flex: 1;
+}
+
 /*DEFAULT APP STYLE for non-auth pages*/
 body {
   font-family: Arial, Helvetica, sans-serif;
   color: white;
   background: #0b0b1a;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .main-content {
@@ -292,4 +299,14 @@ h3.nav-text{
 
 .logout {
   margin-top: 30px;
+}
+
+/*footer*/
+.footer {
+  text-align: center;
+  padding: 0%;
+  margin: 0%;
+  background: white;
+  color: black;
+  border-top: 2px solid #ed3ac6;
 }
