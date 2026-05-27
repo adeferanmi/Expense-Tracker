@@ -13,6 +13,7 @@ model User {
   password  String
 
   expenses  Expense[]
+  budgets   Budget[]
 }
 
 model Expense {
@@ -20,6 +21,17 @@ model Expense {
   title     String
   amount    Float
   category  String
+  createdAt DateTime @default(now())
+
+  userId    Int
+  user      User @relation(fields: [userId], references: [id])
+}
+
+model Budget {
+  id        Int      @id @default(autoincrement())
+  category  String
+  limit     Float
+  month     String
   createdAt DateTime @default(now())
 
   userId    Int
