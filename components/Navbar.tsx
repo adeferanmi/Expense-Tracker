@@ -9,6 +9,10 @@ import {
   FiDollarSign,
   FiLogOut,
   FiPlus,
+  FiEdit,
+  FiPieChart,
+  FiBarChart2,
+  FiBarChart,
 } from "react-icons/fi";
 
 export default function Navbar() {
@@ -51,23 +55,33 @@ export default function Navbar() {
         </Link>
 
         <Link
-          href="/add-expense"
+          href="/update-expenses"
           className={`sidebar-link ${
-            pathname === "/add-expense" ? "active" : ""
+            pathname === "/update-expenses" ? "active" : ""
           }`}
         >
           <FiDollarSign />
-          <span>Add/Delete Expenses</span>
+          <span>Update Expenses</span>
         </Link>
 
         <Link
-          href="/expenses"
+          href="/budgets"
           className={`sidebar-link ${
-            pathname === "/expenses" ? "active" : ""
+            pathname === "/budgets" ? "active" : ""
           }`}
         >
-          <FiPlus />
-          <span>View Expenses</span>
+          <FiPieChart/>
+          <span>Budgets</span>
+        </Link>
+
+        <Link
+          href="/analytics"
+          className={`sidebar-link ${
+            pathname === "/analytics" ? "active" : ""
+          }`}
+        >
+          <FiBarChart2/>
+          <span>Analytics</span>
         </Link>
 
         <Link

@@ -1,14 +1,14 @@
 "use client";
 import Navbar from "@/components/Navbar";
 
-export default function Expenses(){
+export default function Budgets(){
     return (
         <main>
-            <h2>View Your Expenses</h2>
+            <h2>Budgets</h2>
 
             <Navbar/>
 
-            <p>No expenses added here yet.</p>
+            <p>Feature to be soon added.</p>
         </main>
     );
 }
