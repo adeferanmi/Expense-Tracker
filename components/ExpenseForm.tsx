@@ -10,11 +10,7 @@ export default function ExpenseForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({
-      title,
-      amount,
-      category,
-    });
+    console.log({ title, amount, category });
 
     setTitle("");
     setAmount("");
@@ -23,34 +19,43 @@ export default function ExpenseForm() {
 
   return (
     <form className="expense-form" onSubmit={handleSubmit}>
-      <h2>Add Expense</h2>
 
-      <input
-        type="text"
-        placeholder="Expense title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <h2 className="expense-title">Add New Expense</h2>
 
-      <input
-        type="number"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
+      <div className="form-row">
+        <label>Expense Title</label>
+        <input
+          placeholder="Groceries"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
 
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-      >
-        <option value="">Select Category</option>
-        <option value="Food">Food</option>
-        <option value="Transport">Transport</option>
-        <option value="Shopping">Shopping</option>
-        <option value="Bills">Bills</option>
-      </select>
+      <div className="form-row">
+        <label>Amount</label>
+        <input
+          type="number"
+          placeholder="₦12000"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+      </div>
 
-      <button type="submit">Add Expense</button>
+      <div className="form-row">
+        <label>Category</label>
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="">Select category</option>
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Bills">Bills</option>
+        </select>
+      </div>
+
+      <button className="expense-btn" type="submit">
+        Add Expense
+      </button>
+
     </form>
   );
 }

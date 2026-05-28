@@ -17,17 +17,29 @@ export default function AddExpense(){
         category: "Transport",
         date: "May 27, 2026",
         },
+        {
+        title: "Converse Sneakers",
+        amount: 15500,
+        category: "Shopping",
+        date: "May 12, 2026",
+        },        {
+        title: "Income Taxes",
+        amount: 45000,
+        category: "Bills",
+        date: "May 2, 2026",
+        },
     ];
 
     return(
-        <main>
-            <h2>Update Expenses</h2>
+        <main className="expenses-page">
+            <h1 className="expenses-page-title">Update Expenses</h1>
 
             <Navbar/>
             <ExpenseForm/>
 
-            <section>
-                {expenses.map((expense, index) => (
+            <section className="expenses-list">
+                <div className="expense-grid">
+                    {expenses.map((expense, index) => (
                 <ExpenseCard
                     key={index}
                     title={expense.title}
@@ -36,6 +48,7 @@ export default function AddExpense(){
                     date={expense.date}
                 />
                 ))}
+                </div>
             </section>
         </main>
     ); 

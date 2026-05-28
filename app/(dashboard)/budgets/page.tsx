@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 
 export default function Budgets(){
     return (
-        <main>
+        <main className="main-content">
             <h2>Budgets</h2>
 
             <Navbar/>

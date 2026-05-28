@@ -24,7 +24,7 @@ export default function ExpenseCard({
       </div>
 
       <div className="expense-actions">
-        <button>Edit</button>
+        <button className="edit-btn">Edit</button>
         <button className="delete-btn">Delete</button>
       </div>
     </div>
