@@ -1,0 +1,240 @@
+.card {
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #fff5fa
+    );
+
+  border: 1px solid #f3d4e4;
+
+  border-radius: 22px;
+
+  padding: 1rem;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.safe:hover {
+  box-shadow:
+    0 12px 30px rgba(236, 72, 153, 0.12);
+}
+
+.caution:hover {
+  box-shadow:
+    0 12px 30px rgba(219, 39, 119, 0.16);
+}
+
+.nearLimit:hover {
+  box-shadow:
+    0 12px 30px rgba(190, 24, 93, 0.2);
+}
+
+.exceeded:hover {
+  box-shadow:
+    0 12px 30px rgba(131, 24, 67, 0.24);
+}
+
+/* HEADER */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 12px;
+
+  background: #fce7f3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #db2777;
+
+  font-size: 1rem;
+}
+
+.category h2 {
+  margin: 0;
+
+  font-size: 1rem;
+
+  color: #1f2937;
+}
+
+/* BADGE */
+
+.badge {
+  padding: 0.35rem 0.7rem;
+
+  border-radius: 999px;
+
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.safe.badge {
+  background: #fce7f3;
+  color: green;
+}
+
+.caution.badge {
+  background: #fce7f3;
+  color: greenyellow;
+}
+
+.nearLimit.badge {
+  background: #fce7f3;
+  color: orange;
+}
+
+.exceeded.badge {
+  background: #fce7f3;
+  color: red;
+}
+
+/* CHART */
+
+.chartContainer {
+  position: relative;
+
+  height: 180px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centerText {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.centerText h3 {
+  margin: 0;
+
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  color: #db2777;
+}
+
+.centerText span {
+  font-size: 0.8rem;
+
+  color: #9ca3af;
+}
+
+/* LEGEND */
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  font-size: 0.75rem;
+
+  color: #6b7280;
+}
+
+.legend div {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.spentDot,
+.remainingDot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 999px;
+}
+
+.spentDot {
+  background: #db2777;
+}
+
+.remainingDot {
+  background: #fbcfe8;
+}
+
+/* INFO */
+
+.info {
+  margin-top: 1rem;
+
+  text-align: center;
+}
+
+.info p {
+  margin: 0;
+
+  font-size: 0.9rem;
+
+  color: #6b7280;
+}
+
+.info h4 {
+  margin: 0.4rem 0;
+
+  color: #db2777;
+
+  font-size: 1.1rem;
+}
+
+.info span {
+  font-size: 0.8rem;
+
+  color: #9ca3af;
+}
+
+/* TREND */
+
+.trend {
+  margin-top: 1rem;
+
+  font-size: 0.8rem;
+
+  color: #ec4899;
+
+  text-align: center;
+}
+
+/* MESSAGE */
+
+.message {
+  margin-top: 0.8rem;
+
+  font-size: 0.8rem;
+
+  text-align: center;
+
+  color: #6b7280;
+}
