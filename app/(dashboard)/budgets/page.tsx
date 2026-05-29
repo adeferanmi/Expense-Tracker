@@ -1,5 +1,7 @@
 "use client";
 import Navbar from "@/components/Navbar";
+import OverallBudgetHealth from "@/components/budgets/OverallBudgetHealth";
+import styles from "./overallbudgethealth.module.css"
 
 export default function Budgets(){
     return (
@@ -8,7 +10,10 @@ export default function Budgets(){
 
             <Navbar/>
 
-            <p>Feature to be soon added.</p>
+            <OverallBudgetHealth
+                totalBudget={200000}
+                spent={82000}
+            />
         </main>
     );
 }

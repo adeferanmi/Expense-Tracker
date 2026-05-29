@@ -1,0 +1,192 @@
+/* components/budget/OverallBudgetHealth.module.css */
+
+.overallBudgetHealth {
+  width: 100%;
+
+  padding: 1.2rem;
+
+  border-radius: 20px;
+
+  background: white;
+
+  border: 1px solid #f3d4e4;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+
+  cursor: default;
+}
+
+/* Hover State */
+.overallBudgetHealth:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 10px 30px rgba(255, 105, 180, 0.12);
+
+  border-color: #f8a8c9;
+}
+
+.healthHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 1rem;
+}
+
+.healthHeader h2 {
+  margin: 0;
+
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.healthMessage {
+  margin-top: 0.25rem;
+
+  color: #6b7280;
+
+  font-size: 0.85rem;
+}
+
+.statusBadge {
+  padding: 0.45rem 0.8rem;
+
+  border-radius: 999px;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  letter-spacing: 0.3px;
+}
+
+.statusBadge.safe {
+  background-color: #fce7f3;
+  color: green;
+}
+
+.statusBadge.caution {
+  background-color: #fde7f3;
+  color: yellow;
+}
+
+.statusBadge.nearLimit {
+  background-color: #fbcfe8;
+  color: orange;
+}
+
+.statusBadge.exceeded {
+  background-color: #f9a8d4;
+  color: red;
+}
+
+.budgetStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 0.8rem;
+
+  margin-bottom: 1rem;
+}
+
+.statCard {
+  padding: 0.9rem;
+
+  border-radius: 14px;
+
+  background: #fff5fa;
+
+  border: 1px solid #fbcfe8;
+
+  transition: 0.2s ease;
+}
+
+.statCard:hover {
+  transform: scale(1.02);
+}
+
+.statCard span {
+  color: #9ca3af;
+
+  font-size: 0.72rem;
+}
+
+.statCard h3 {
+  margin-top: 0.35rem;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  color: #db2777;
+}
+
+.progressSection {
+  width: 100%;
+}
+
+.progressInfo {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 0.45rem;
+
+  color: #374151;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.progressBar {
+  width: 100%;
+  height: 10px;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  background: #fce7f3;
+}
+
+.progressFill {
+  height: 100%;
+
+  border-radius: 999px;
+
+  transition: width 0.4s ease;
+}
+
+.progressFill.safe {
+  background: #ec4899;
+}
+
+.progressFill.caution {
+  background: #db2777;
+}
+
+.progressFill.nearLimit {
+  background: #be185d;
+}
+
+.progressFill.exceeded {
+  background: #831843;
+}
+
+@media (max-width: 768px) {
+  .budgetStats {
+    grid-template-columns: 1fr;
+  }
+
+  .healthHeader {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 0.8rem;
+  }
+}
