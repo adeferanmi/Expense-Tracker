@@ -1,7 +1,7 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import ExpenseCard from "@/components/ExpenseCard";
-import ExpenseForm from "@/components/ExpenseForm";
+import ExpenseCard from "@/components/update-expenses/ExpenseCard";
+import ExpenseForm from "@/components/update-expenses/ExpenseForm";
 
 export default function AddExpense(){
     const expenses = [
