@@ -1,6 +1,6 @@
 .form {
   background: #ffffff;
-  border: 2px solid #ffd1dc;
+  border: 1px solid #db2777;
   border-radius: 18px;
 
   padding: 32px;
@@ -20,7 +20,7 @@
 .title {
   font-size: 22px;
   font-weight: 700;
-  color: #ff4d88;
+  color: #db2777;
   margin-bottom: 20px;
 }
 
@@ -41,7 +41,7 @@
 .field label {
   font-size: 13px;
   font-weight: 600;
-  color: #ff6fa1;
+  color: #db2777;
 }
 
 /* INPUTS */
@@ -70,7 +70,7 @@
 /* HOVER STATE */
 .field input:hover,
 .field select:hover {
-  border-color: #ffb6c1;
+  border-color: #db2777;
 }
 
 /* BUTTON */
@@ -82,10 +82,10 @@
   border: none;
   border-radius: 14px;
 
-  background: linear-gradient(135deg, #ff4d88, #ff85a2);
+  background: #db2777;
   color: white;
 
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 700;
 
   cursor: pointer;
