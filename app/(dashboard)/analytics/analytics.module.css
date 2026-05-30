@@ -21,7 +21,7 @@
 /* CARD */
 .analyticsCard {
   background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(219, 39, 119, 0.1);
+  border: 1px solid #db2777;
   backdrop-filter: blur(10px);
   padding: 1.5rem;
   border-radius: 18px;
@@ -114,4 +114,13 @@
 /* ACTIVE / CLICK FEEL (optional if clickable cards) */
 .analyticsCard:active {
   transform: scale(0.98);
+}
+
+.analyticsCharts {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  min-height: 400px;
+  align-items: center;
 }
