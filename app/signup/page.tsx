@@ -4,6 +4,10 @@ import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Signup | Expense Tracker",
+};
+
 export default function Signup() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");

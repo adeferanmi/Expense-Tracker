@@ -16,6 +16,10 @@ type Expense = {
   date: string;
 };
 
+export const metadata = {
+  title: "Update Expenses | Expense Tracker",
+};
+
 export default function ExpensesPage() {
     const [expenses, setExpenses] = useState<Expense[]>([
     {

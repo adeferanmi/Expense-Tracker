@@ -9,6 +9,10 @@ import ManageBudgetButton from "@/components/budgets/ManageBudgetButton";
 import BudgetModal from "@/components/budgets/BudgetModal";
 import Image from "next/image";
 
+export const metadata = {
+  title: "Budgets | Expense Tracker",
+};
+
 export default function Budgets(){
     const [modalOpen, setModalOpen] = useState(false);
     const [modalType, setModalType] = useState<"weekly" | "monthly">("weekly");

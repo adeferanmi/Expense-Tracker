@@ -5,6 +5,11 @@ import Image from "next/image";
 import SpendingLineChart from "@/components/analytics/SpendingLineChart";
 import CategoryPieChart from "@/components/analytics/CategoryPieChart";
 import RecentTransactions from "@/components/analytics/RecentTransactions";
+
+export const metadata = {
+  title: "Analytics | Expense Tracker",
+};
+
 export default function Analytics(){
     const analytics = {
     totalExpenses: 85000,
