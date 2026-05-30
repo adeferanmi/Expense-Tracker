@@ -1,0 +1,117 @@
+.titleTextAnalytics {
+  color: #db2777;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.titleContentAnalytics {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* GRID */
+.analyticsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* CARD */
+.analyticsCard {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(219, 39, 119, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 18px;
+  text-align: center;
+
+  position: relative;
+  overflow: hidden;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+
+  /* 👇 floating effect */
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+/* floating motion */
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.analyticsCard:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.analyticsCard:nth-child(3) {
+  animation-delay: 1s;
+}
+
+.analyticsCard:nth-child(4) {
+  animation-delay: 1.5s;
+}
+
+/* TOP ACCENT LINE */
+.analyticsCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #db2777, #f472b6);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.analyticsCard:hover {
+  animation-play-state: paused;
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(219, 39, 119, 0.18);
+}
+
+.analyticsCard:hover::before {
+  transform: scaleX(1);
+}
+
+/* TITLE */
+.analyticsCard h3 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* VALUE */
+.analyticsCard p {
+  font-size: 1.8rem;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  color: #db2777;
+}
+
+/* OPTIONAL: subtle highlight for important numbers */
+.analyticsCard p span {
+  color: #db2777;
+}
+
+/* ACTIVE / CLICK FEEL (optional if clickable cards) */
+.analyticsCard:active {
+  transform: scale(0.98);
+}

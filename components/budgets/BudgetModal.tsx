@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import styles from "./BudgetModal.module.css";
-import { FaSave } from "react-icons/fa";
 
 type Category = {
   name: string;
@@ -113,7 +112,7 @@ export default function BudgetModal({
             className={styles.saveBtn}
             onClick={handleSave}
           >
-            <FaSave/> Save Changes
+            Save Changes
           </button>
         </div>
       </div>
