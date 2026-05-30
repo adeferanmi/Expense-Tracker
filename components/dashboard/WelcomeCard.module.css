@@ -1,0 +1,81 @@
+.welcomeCard {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  
+  gap: 0px; 
+  border: 1.5px solid #db2777;
+  padding: 32px 40px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+
+  width: 100%;
+  max-width: 620px; 
+  height: 100%;
+  min-height: 300px;
+  
+  position: relative; 
+  overflow: visible; 
+  margin-top: 60px;
+}
+
+.welcomeText {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 65%; 
+  z-index: 2; 
+}
+
+.welcomeTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.welcomeSubtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.welcomeInsight {
+  font-size: 16px;
+  color: black;
+  margin: 0;
+}
+
+.highlight {
+  font-weight: 600;
+  color: #db2777;
+}
+
+.welcomePicture {
+  width: 180px; 
+  height: 100%;
+  position: relative;
+}
+
+.bearPicture {
+  position: absolute;
+  bottom: -150px;  
+  right: 75px;   
+  width: 220px;   
+  display: block; 
+}
+
+.bearPicture img {
+  display: block;
+  width: 420px;
+  height: 450px;
+  transition: 
+    transform 0.3s ease,
+    filter 0.3s ease
+  ;
+}
+
+.bearPicture img:hover{
+    transform: scale(1.08) translateY(-5px);
+}

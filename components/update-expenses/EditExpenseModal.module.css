@@ -1,0 +1,100 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  padding: 28px;
+  border-radius: 20px;
+  border: 2px solid #ffe3ee;
+  box-shadow: 0 20px 60px rgba(255, 77, 136, 0.2);
+  animation: popIn 0.25s ease;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal h2 {
+  color: #db2777;
+  margin-bottom: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.field input,
+.field select {
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #ffe3ee;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #db2777;
+  box-shadow: 0 0 0 4px rgba(255, 77, 136, 0.1);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.cancelBtn {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  background: #f4f4f4;
+  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  background: #e8e8e8;
+}
+
+.saveBtn {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  background: #db2777;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.saveBtn:hover {
+  transform: translateY(-2px);
+}

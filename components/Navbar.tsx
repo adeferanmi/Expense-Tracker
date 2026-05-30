@@ -8,7 +8,8 @@ import {
   FiGrid,
   FiDollarSign,
   FiLogOut,
-  FiPlus,
+  FiPieChart,
+  FiBarChart2,
 } from "react-icons/fi";
 
 export default function Navbar() {
@@ -30,12 +31,10 @@ export default function Navbar() {
 
       <div className="profile-section">
         <img
-          src="/male1.png" width={60} height={60}
+          src="/userpic.png" width={80} height={90}
           alt="Profile Picture"
           className="profile-img"
         />
-
-        <h3>User</h3>
       </div>
 
       <nav className="sidebar-nav">
@@ -51,23 +50,33 @@ export default function Navbar() {
         </Link>
 
         <Link
-          href="/add-expense"
+          href="/update-expenses"
           className={`sidebar-link ${
-            pathname === "/add-expense" ? "active" : ""
+            pathname === "/update-expenses" ? "active" : ""
           }`}
         >
           <FiDollarSign />
-          <span>Add/Delete Expenses</span>
+          <span>Update Expenses</span>
         </Link>
 
         <Link
-          href="/expenses"
+          href="/budgets"
           className={`sidebar-link ${
-            pathname === "/expenses" ? "active" : ""
+            pathname === "/budgets" ? "active" : ""
           }`}
         >
-          <FiPlus />
-          <span>View Expenses</span>
+          <FiPieChart/>
+          <span>Budgets</span>
+        </Link>
+
+        <Link
+          href="/analytics"
+          className={`sidebar-link ${
+            pathname === "/analytics" ? "active" : ""
+          }`}
+        >
+          <FiBarChart2/>
+          <span>Analytics</span>
         </Link>
 
         <Link
