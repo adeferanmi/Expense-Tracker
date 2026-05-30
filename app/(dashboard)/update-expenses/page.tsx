@@ -16,10 +16,6 @@ type Expense = {
   date: string;
 };
 
-export const metadata = {
-  title: "Update Expenses | Expense Tracker",
-};
-
 export default function ExpensesPage() {
     const [expenses, setExpenses] = useState<Expense[]>([
     {
@@ -91,7 +87,7 @@ export default function ExpensesPage() {
       <Navbar />
     <div className={styles.titleContent}>
     <Image src="/favicon.png" alt="logo" width={50} height={50}/>
-    <h1 className={styles.expensesPageTitle}>Expenses</h1>
+    <h1 className={styles.expensesPageTitle}>Update Expenses</h1>
     </div>
 
       <AddExpenseForm onAddExpense={handleAddExpense} />

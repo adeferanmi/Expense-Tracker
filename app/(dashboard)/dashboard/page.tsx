@@ -8,10 +8,6 @@ import Image from "next/image";
 import RecentTransactions from "@/components/analytics/RecentTransactions";
 import BudgetProgress from "@/components/dashboard/BudgetProgress";
 
-export const metadata = {
-  title: "Dashboard | Expense Tracker",
-};
-
 export default function Dashboard(){
 
     const monthlySpendingOverTime = [
