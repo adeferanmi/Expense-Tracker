@@ -1,0 +1,87 @@
+.welcomeCard {
+  display: flex;
+  /* CHANGE: Group items from the start instead of forcing them to opposite walls */
+  justify-content: flex-start; 
+  align-items: center;
+  
+  /* CHANGE: Explicitly define the gap between your text column and the picture area */
+  gap: 0px; 
+  border: 1.5px solid #db2777;
+  padding: 32px 40px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+
+  width: 100%;
+  /* CHANGE: Reduce max-width slightly if needed so the card matches its contents perfectly */
+  max-width: 620px; 
+  height: 100%;
+  min-height: 300px;
+  
+  position: relative; 
+  overflow: visible; 
+  margin-top: 60px; /* Gives the bear head clearance room */
+}
+
+.welcomeText {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Gives your text plenty of breathing room without stepping on the bear */
+  max-width: 65%; 
+  z-index: 2; /* Keeps text layered cleanly */
+}
+
+.welcomeTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.welcomeSubtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.welcomeInsight {
+  font-size: 16px;
+  color: black;
+  margin: 0;
+}
+
+.highlight {
+  font-weight: 600;
+  color: #db2777;
+}
+
+/* This container acts as your structural layout block inside the flex row */
+.welcomePicture {
+  width: 180px; 
+  height: 100%;
+  position: relative;
+}
+
+/* This is the absolute element containing the image */
+.bearPicture {
+  position: absolute;
+  bottom: -150px;  /* CHANGE: Sinks the feet slightly below the padding boundary for that custom overlap */
+  right: 75px;   /* Pulls the bear closer to the edge, balancing out the card's right-side white space */
+  width: 220px;   /* Sharp, contained width for a perfectly proportioned illustration */
+  display: block; 
+}
+
+.bearPicture img {
+  display: block;
+  width: 420px;
+  height: 450px;
+  transition: 
+    transform 0.3s ease,
+    filter 0.3s ease
+  ;
+}
+
+.bearPicture img:hover{
+    transform: scale(1.08) translateY(-5px);
+}

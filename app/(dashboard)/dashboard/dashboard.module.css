@@ -1,0 +1,51 @@
+.dashboardPage {
+  padding: 2rem;
+}
+
+.dashboardHero,
+.lowerContent {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.titleText {
+  color: #db2777;
+}
+
+.titleContent {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.dashboardHero > *:first-child {
+  flex: 2;
+}
+
+.dashboardHero > *:last-child {
+  flex: 1;
+}
+
+.lineChart {
+  max-width: 1000px;
+  margin-top: 25px;
+  margin-left: 45px;
+}
+
+.title{
+  color: #db2777;
+  margin-left: 20px;
+  margin-top: 50px;
+  font-size: 1.5rem;
+}
+
+.recents {
+  width: 500px;
+  margin-left: 45px;
+}
+
+.budget {
+  width: 500px;
+  height: 300px;
+}

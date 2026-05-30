@@ -69,18 +69,6 @@ export default function Analytics(){
         category: "Shopping",
         date: "May 27",
     },
-    /*{
-        title: "Lunch",
-        amount: 1500,
-        category: "Food",
-        date: "May 27",
-    },
-    {
-        title: "Bus Fare",
-        amount: 1000,
-        category: "Transport",
-        date: "May 26",
-    },*/
     ];
 
     return(
