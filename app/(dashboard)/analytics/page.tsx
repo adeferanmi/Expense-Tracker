@@ -69,7 +69,7 @@ export default function Analytics(){
         category: "Shopping",
         date: "May 27",
     },
-    {
+    /*{
         title: "Lunch",
         amount: 1500,
         category: "Food",
@@ -80,7 +80,7 @@ export default function Analytics(){
         amount: 1000,
         category: "Transport",
         date: "May 26",
-    },
+    },*/
     ];
 
     return(

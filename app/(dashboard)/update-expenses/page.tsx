@@ -1,55 +1,121 @@
 "use client";
+
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
+import AddExpenseForm from "@/components/update-expenses/AddExpenseForm";
+import styles from "./update-expenses.module.css";
 import ExpenseCard from "@/components/update-expenses/ExpenseCard";
-import ExpenseForm from "@/components/update-expenses/ExpenseForm";
+import EditExpenseModal from "@/components/update-expenses/EditExpenseModal";
+import Image from "next/image";
 
-export default function AddExpense(){
-    const expenses = [
-        {
+type Expense = {
+  id: string;
+  title: string;
+  amount: number;
+  category: string;
+  date: string;
+};
+
+export default function ExpensesPage() {
+    const [expenses, setExpenses] = useState<Expense[]>([
+    {
+        id: "1",
         title: "Groceries",
-        amount: 12000,
+        amount: 5000,
         category: "Food",
-        date: "May 28, 2026",
-        },
-        {
-        title: "Uber Ride",
-        amount: 4500,
-        category: "Transport",
-        date: "May 27, 2026",
-        },
-        {
-        title: "Converse Sneakers",
-        amount: 15500,
+        date: "2026-05-30",
+    },
+    {
+        id: "2",
+        title: "Sneakers",
+        amount: 14000,
         category: "Shopping",
-        date: "May 12, 2026",
-        },        {
-        title: "Income Taxes",
-        amount: 45000,
+        date: "2026-01-04",
+    },
+    {
+        id: "3",
+        title: "Petrol",
+        amount: 10000,
+        category: "Transport",
+        date: "2026-01-04",
+    },     {
+        id: "4",
+        title: "Income Tax",
+        amount: 2510,
         category: "Bills",
-        date: "May 2, 2026",
-        },
-    ];
+        date: "2026-01-04",
+    },     {
+        id: "5",
+        title: "Electronics",
+        amount: 30000,
+        category: "Others",
+        date: "2024-11-04",
+    },     
+    ]);
 
-    return(
-        <main className="expenses-page">
-            <h1 className="expenses-page-title">Update Expenses</h1>
+    const [selectedExpense, setSelectedExpense] =
+        useState<Expense | null>(null);
 
-            <Navbar/>
-            <ExpenseForm/>
+    const [isModalOpen, setIsModalOpen] =
+        useState(false);
 
-            <section className="expenses-list">
-                <div className="expense-grid">
-                    {expenses.map((expense, index) => (
+  function handleAddExpense(expense: Omit<Expense, "id">) {
+    const newExpense: Expense = {
+      id: crypto.randomUUID(),
+      ...expense,
+    };
+
+    setExpenses((prev) => [newExpense, ...prev]);
+  }
+
+  function handleEdit(expense: Expense) {
+  setSelectedExpense(expense);
+  setIsModalOpen(true);
+}
+
+    function handleSave(updatedExpense: Expense) {
+    setExpenses((prev) =>
+        prev.map((expense) =>
+        expense.id === updatedExpense.id
+            ? updatedExpense
+            : expense
+        )
+    );
+}
+  return (
+    <main className="main-content">
+      <Navbar />
+    <div className={styles.titleContent}>
+    <Image src="/favicon.png" alt="logo" width={50} height={50}/>
+    <h1 className={styles.expensesPageTitle}>Expenses</h1>
+    </div>
+
+      <AddExpenseForm onAddExpense={handleAddExpense} />
+
+      <h2 className={styles.recentExpensesTitle}>Expenses You've Added:</h2>
+
+        <div className={styles.expenseGrid}>
+            {expenses.map((exp) => (
                 <ExpenseCard
-                    key={index}
-                    title={expense.title}
-                    amount={expense.amount}
-                    category={expense.category}
-                    date={expense.date}
+                key={exp.id}
+                expense={exp}
+                onEdit={handleEdit}
+                onDelete={(id) =>
+                    setExpenses((prev) =>
+                    prev.filter((e) => e.id !== id)
+                    )
+                }
                 />
-                ))}
-                </div>
-            </section>
-        </main>
-    ); 
+            ))}
+        </div>
+
+        <EditExpenseModal
+            expense={selectedExpense}
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSave={handleSave}
+        />
+
+    </main>
+  );
 }

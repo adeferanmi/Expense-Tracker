@@ -1,0 +1,23 @@
+.titleContent {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.expenseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+
+  margin-top: 30px;
+}
+
+.expensesPageTitle,
+.recentExpensesTitle {
+    color: #db2777;
+}
+
+.recentExpensesTitle{
+    margin-top: 30px;
+}
