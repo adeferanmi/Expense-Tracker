@@ -8,11 +8,8 @@ import {
   FiGrid,
   FiDollarSign,
   FiLogOut,
-  FiPlus,
-  FiEdit,
   FiPieChart,
   FiBarChart2,
-  FiBarChart,
 } from "react-icons/fi";
 
 export default function Navbar() {
@@ -34,12 +31,10 @@ export default function Navbar() {
 
       <div className="profile-section">
         <img
-          src="/male1.png" width={60} height={60}
+          src="/userpic.png" width={80} height={90}
           alt="Profile Picture"
           className="profile-img"
         />
-
-        <h3>User</h3>
       </div>
 
       <nav className="sidebar-nav">
