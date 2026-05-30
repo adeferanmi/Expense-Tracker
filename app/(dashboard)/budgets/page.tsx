@@ -29,7 +29,7 @@ export default function Budgets(){
         <main className="main-content">
             <div className={styles.titleContent}>
                 <Image src="/favicon.png" alt="logo" width={50} height={50}/>
-                <h1 className={styles.titleText}>View Your Budget</h1>
+                <h1 className={styles.titleText}>Your Budget</h1>
             </div>
 
             <div>

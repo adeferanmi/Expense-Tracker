@@ -2,9 +2,9 @@
 import Navbar from "@/components/Navbar";
 import styles from "./analytics.module.css";
 import Image from "next/image";
-import SpendingLineChart from "@/components/update-expenses/analytics/SpendingLineChart";
-import CategoryPieChart from "@/components/update-expenses/analytics/CategoryPieChart";
-
+import SpendingLineChart from "@/components/analytics/SpendingLineChart";
+import CategoryPieChart from "@/components/analytics/CategoryPieChart";
+import RecentTransactions from "@/components/analytics/RecentTransactions";
 export default function Analytics(){
     const analytics = {
     totalExpenses: 85000,
@@ -50,13 +50,45 @@ export default function Analytics(){
         { name: "Transport", value: 25000 },
         { name: "Shopping", value: 80000 },
     ];
+    const recentTransactions = [
+    {
+        title: "Groceries",
+        amount: 5000,
+        category: "Food",
+        date: "May 29",
+    },
+    {
+        title: "Uber",
+        amount: 2000,
+        category: "Transport",
+        date: "May 28",
+    },
+    {
+        title: "New Shoes",
+        amount: 8000,
+        category: "Shopping",
+        date: "May 27",
+    },
+    {
+        title: "Lunch",
+        amount: 1500,
+        category: "Food",
+        date: "May 27",
+    },
+    {
+        title: "Bus Fare",
+        amount: 1000,
+        category: "Transport",
+        date: "May 26",
+    },
+    ];
 
     return(
         <main className="main-content">
 
             <div className={styles.titleContentAnalytics}>
                 <Image src="/favicon.png" alt="logo" width={50} height={50}/>
-                <h1 className={styles.titleTextAnalytics}>View Your Analytics</h1>
+                <h1 className={styles.titleTextAnalytics}>Analytics</h1>
             </div>
 
             <Navbar/>
@@ -84,9 +116,17 @@ export default function Analytics(){
                 </div>
             </section>
 
+            <RecentTransactions
+            transactions={recentTransactions}
+            />
+
             <div className={styles.analyticsCharts}>
+                <h2 className={styles.weeklyHeader}>Weekly Expenses</h2><br/>
                 <SpendingLineChart data={weeklySpendingOverTime}/>
                 <CategoryPieChart data={weeklyCategoryData} />
+            </div>
+            <div className={styles.analyticsCharts}>
+                <h2 className={styles.monthlyHeader}>Monthly Expenses</h2><br/>
                 <SpendingLineChart data={monthlySpendingOverTime}/>
                 <CategoryPieChart data={monthlyCategoryData} />
             </div>

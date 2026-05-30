@@ -12,17 +12,15 @@
   display: grid;
 
   grid-template-columns: repeat(2, 1fr);
-
-  gap: 1rem;
-
+  max-width: 950px;
+  gap: 1.5rem;
+  align-items: center;
   margin-top: 2rem;
 }
 
 .analyticsGrid{
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
   gap: 1rem;
 
   margin-top: 2rem; 

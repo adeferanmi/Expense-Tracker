@@ -124,3 +124,13 @@
   min-height: 400px;
   align-items: center;
 }
+
+.weeklyHeader,
+.monthlyHeader {
+  color: #db2777;
+}
+
+.monthlyHeader {
+  display: flex;
+  text-align: left;
+}
