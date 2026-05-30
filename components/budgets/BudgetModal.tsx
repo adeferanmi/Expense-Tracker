@@ -32,7 +32,6 @@ export default function BudgetModal({
   const [viewType, setViewType] = useState<BudgetType>("weekly");
   const [data, setData] = useState<Category[]>([]);
 
-  // Load correct data when type changes OR modal opens
   useEffect(() => {
     if (viewType === "weekly") {
       setData(weeklyData);
@@ -65,11 +64,9 @@ export default function BudgetModal({
         className={styles.modal}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* HEADER */}
         <div className={styles.header}>
           <h2>Edit Budgets</h2>
 
-          {/* DROPDOWN */}
           <select
             value={viewType}
             onChange={(e) =>
@@ -89,7 +86,6 @@ export default function BudgetModal({
           </button>
         </div>
 
-        {/* LIST */}
         <div className={styles.list}>
           {data.map((item, index) => (
             <div key={item.name} className={styles.row}>
@@ -106,7 +102,6 @@ export default function BudgetModal({
           ))}
         </div>
 
-        {/* ACTIONS */}
         <div className={styles.actions}>
           <button
             className={styles.saveBtn}

@@ -21,7 +21,7 @@ export default function CategoryPieChart({ data }: Props) {
             dataKey="value"
             nameKey="name"
             outerRadius={85}
-            innerRadius={55}   // 👈 makes it a donut (more modern)
+            innerRadius={55} 
             label
           >
             {data.map((_, index) => (
@@ -29,7 +29,6 @@ export default function CategoryPieChart({ data }: Props) {
             ))}
           </Pie>
 
-          {/* ALWAYS visible labels (fixes your issue) */}
           <Legend />
 
           <Tooltip />

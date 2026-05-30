@@ -10,7 +10,6 @@
   gap: 12px;
 }
 
-/* GRID */
 .analyticsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -18,7 +17,6 @@
   margin-top: 1rem;
 }
 
-/* CARD */
 .analyticsCard {
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #db2777;
@@ -26,20 +24,14 @@
   padding: 1.5rem;
   border-radius: 18px;
   text-align: center;
-
   position: relative;
   overflow: hidden;
-
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   cursor: pointer;
-
   transition: all 0.3s ease;
-
-  /* 👇 floating effect */
   animation: floatCard 6s ease-in-out infinite;
 }
 
-/* floating motion */
 @keyframes floatCard {
   0% {
     transform: translateY(0px);
@@ -64,7 +56,6 @@
   animation-delay: 1.5s;
 }
 
-/* TOP ACCENT LINE */
 .analyticsCard::before {
   content: "";
   position: absolute;
@@ -78,7 +69,6 @@
   transition: transform 0.3s ease;
 }
 
-/* HOVER EFFECT */
 .analyticsCard:hover {
   animation-play-state: paused;
   transform: translateY(-10px) scale(1.02);
@@ -89,7 +79,6 @@
   transform: scaleX(1);
 }
 
-/* TITLE */
 .analyticsCard h3 {
   font-size: 0.85rem;
   font-weight: 500;
@@ -98,7 +87,6 @@
   letter-spacing: 1px;
 }
 
-/* VALUE */
 .analyticsCard p {
   font-size: 1.8rem;
   margin-top: 0.5rem;
@@ -106,12 +94,10 @@
   color: #db2777;
 }
 
-/* OPTIONAL: subtle highlight for important numbers */
 .analyticsCard p span {
   color: #db2777;
 }
 
-/* ACTIVE / CLICK FEEL (optional if clickable cards) */
 .analyticsCard:active {
   transform: scale(0.98);
 }

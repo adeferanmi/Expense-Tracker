@@ -18,7 +18,6 @@ export default function ManageBudgetButton({ onClick }: Props) {
           background: "linear-gradient(135deg, #db2777, #ec4899)",
           boxShadow: "0 10px 20px rgba(219, 39, 119, 0.25)",
           transition: "0.2s ease",
-
           marginBottom: "20px",
         }}
       >

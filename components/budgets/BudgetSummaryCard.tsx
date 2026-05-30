@@ -30,7 +30,6 @@ export default function BudgetSummaryCard({
 }: Props) {
   return (
     <div className={styles.card}>
-      {/* Header */}
       <div className={styles.header}>
         <div>
           <h3>{title}</h3>
@@ -38,7 +37,6 @@ export default function BudgetSummaryCard({
         </div>
       </div>
 
-      {/* Categories */}
       <div className={styles.list}>
         {categories.map((cat) => {
           const percentage = getPercentage(cat.spent, cat.limit);

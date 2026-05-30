@@ -89,7 +89,6 @@ export default function BudgetChartCard({
 
   return (
     <div className={`${styles.card} ${styles[status]}`}>
-      {/* HEADER */}
       <div className={styles.header}>
         <div className={styles.category}>
           <div className={styles.icon}>
@@ -106,7 +105,6 @@ export default function BudgetChartCard({
         </div>
       </div>
 
-      {/* CHART */}
       <div className={styles.chartContainer}>
         <ResponsiveContainer width="100%" height={180}>
           <PieChart>
@@ -127,14 +125,12 @@ export default function BudgetChartCard({
           </PieChart>
         </ResponsiveContainer>
 
-        {/* CENTER TEXT */}
         <div className={styles.centerText}>
           <h3>{percentage}%</h3>
           <span>spent</span>
         </div>
       </div>
 
-      {/* LEGEND */}
       <div className={styles.legend}>
         <div>
           <span className={styles.spentDot}></span>
@@ -147,7 +143,6 @@ export default function BudgetChartCard({
         </div>
       </div>
 
-      {/* INFO */}
       <div className={styles.info}>
         <p>
           ₦{spent.toLocaleString()} of ₦
@@ -163,12 +158,10 @@ export default function BudgetChartCard({
         </span>
       </div>
 
-      {/* TREND */}
       <div className={styles.trend}>
         ↑ 12% more than last week
       </div>
 
-      {/* MESSAGE */}
       <div className={styles.message}>
         {getMessage()}
       </div>

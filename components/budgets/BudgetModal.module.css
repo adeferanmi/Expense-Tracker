@@ -1,26 +1,19 @@
 .overlay {
   position: fixed;
   inset: 0;
-
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(6px);
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   z-index: 999;
 }
 
 .modal {
   width: 420px;
-
   background: white;
-
   border-radius: 18px;
-
   padding: 1.2rem;
-
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
@@ -45,7 +38,6 @@
 
 .list {
   margin-top: 1rem;
-
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -55,11 +47,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 0.7rem;
-
   background: #fff5fa;
-
   border: 1px solid #fbcfe8;
   border-radius: 12px;
 }
@@ -71,53 +60,36 @@
 
 .row input {
   width: 120px;
-
   padding: 0.4rem;
-
   border-radius: 8px;
-
   border: 1px solid #f3d4e4;
-
   outline: none;
 }
 
 .actions {
   margin-top: 1.2rem;
-
   display: flex;
   justify-content: flex-end;
 }
 
 .save {
   padding: 0.6rem 1rem;
-
   border: none;
-
   border-radius: 999px;
-
   cursor: pointer;
-
   background: #db2777;
   color: white;
-
   font-weight: 600;
 }
 
 .dropdown {
   padding: 0.4rem 0.6rem;
-
   border-radius: 10px;
-
   border: 1px solid #f3d4e4;
-
   background: white;
-
   font-size: 0.85rem;
-
   outline: none;
-
   cursor: pointer;
-
   color: #db2777;
 }
 
@@ -130,22 +102,17 @@
 
 .saveBtn {
   padding: 0.85rem 1.5rem;
-
   border: none;
   border-radius: 999px;
-
   background: linear-gradient(
     135deg,
     #db2777,
     #ec4899
   );
-
   color: white;
   font-size: 0.95rem;
   font-weight: 600;
-
   cursor: pointer;
-
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -153,7 +120,6 @@
 
 .saveBtn:hover {
   transform: translateY(-2px);
-
   box-shadow:
     0 10px 25px rgba(
       219,

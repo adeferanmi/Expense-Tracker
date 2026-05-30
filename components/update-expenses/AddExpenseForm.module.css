@@ -2,12 +2,10 @@
   background: #ffffff;
   border: 1px solid #db2777;
   border-radius: 18px;
-
   padding: 32px;
   width: 100%;
   max-width: 800px; /* ⬅️ doubled feel */
   margin: 0;
-
   box-shadow: 0 10px 30px rgba(255, 182, 193, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -24,14 +22,12 @@
   margin-bottom: 20px;
 }
 
-/* GRID LAYOUT */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-/* INPUT GROUPS */
 .field {
   display: flex;
   flex-direction: column;
@@ -44,22 +40,17 @@
   color: #db2777;
 }
 
-/* INPUTS */
 .field input,
 .field select {
   padding: 14px;
   border-radius: 12px;
-
   border: 2px solid #ffe4ec;
   background: #fff;
-
   font-size: 14px;
   color: #333;
-
   transition: all 0.2s ease;
 }
 
-/* FOCUS STATE */
 .field input:focus,
 .field select:focus {
   outline: none;
@@ -67,45 +58,35 @@
   box-shadow: 0 0 0 4px rgba(255, 77, 136, 0.15);
 }
 
-/* HOVER STATE */
 .field input:hover,
 .field select:hover {
   border-color: #db2777;
 }
 
-/* BUTTON */
 .button {
   margin-top: 20px;
   width: 100%;
   padding: 16px;
-
   border: none;
   border-radius: 14px;
-
   background: #db2777;
   color: white;
-
   font-size: 1rem;
   font-weight: 700;
-
   cursor: pointer;
-
   transition: all 0.2s ease;
 }
 
-/* BUTTON HOVER */
 .button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(255, 77, 136, 0.3);
 }
 
-/* BUTTON ACTIVE */
 .button:active {
   transform: translateY(0px);
   box-shadow: none;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;

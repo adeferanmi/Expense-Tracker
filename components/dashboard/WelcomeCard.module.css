@@ -1,10 +1,8 @@
 .welcomeCard {
   display: flex;
-  /* CHANGE: Group items from the start instead of forcing them to opposite walls */
   justify-content: flex-start; 
   align-items: center;
   
-  /* CHANGE: Explicitly define the gap between your text column and the picture area */
   gap: 0px; 
   border: 1.5px solid #db2777;
   padding: 32px 40px;
@@ -13,23 +11,21 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
 
   width: 100%;
-  /* CHANGE: Reduce max-width slightly if needed so the card matches its contents perfectly */
   max-width: 620px; 
   height: 100%;
   min-height: 300px;
   
   position: relative; 
   overflow: visible; 
-  margin-top: 60px; /* Gives the bear head clearance room */
+  margin-top: 60px;
 }
 
 .welcomeText {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  /* Gives your text plenty of breathing room without stepping on the bear */
   max-width: 65%; 
-  z-index: 2; /* Keeps text layered cleanly */
+  z-index: 2; 
 }
 
 .welcomeTitle {
@@ -56,19 +52,17 @@
   color: #db2777;
 }
 
-/* This container acts as your structural layout block inside the flex row */
 .welcomePicture {
   width: 180px; 
   height: 100%;
   position: relative;
 }
 
-/* This is the absolute element containing the image */
 .bearPicture {
   position: absolute;
-  bottom: -150px;  /* CHANGE: Sinks the feet slightly below the padding boundary for that custom overlap */
-  right: 75px;   /* Pulls the bear closer to the edge, balancing out the card's right-side white space */
-  width: 220px;   /* Sharp, contained width for a perfectly proportioned illustration */
+  bottom: -150px;  
+  right: 75px;   
+  width: 220px;   
   display: block; 
 }
 

@@ -14,7 +14,6 @@ export default function WelcomeCard() {
           What do your expenses look like today?
         </p>
 
-        {/* Optional styling to match your links or budget text */}
         <p className={styles.welcomeInsight}>
           You have spent <span className={styles.highlight}>₦145,000</span> this month - that's <span className={styles.highlight}>58%</span> of your budget.
         </p>
@@ -22,7 +21,6 @@ export default function WelcomeCard() {
 
       <div className={styles.welcomePicture}>
         <div className={styles.bearPicture}>
-          {/* Width and height here act as aspect ratio locks for Next.js Image */}
           <Image 
             src="/newbear.png"
             width={300} 
