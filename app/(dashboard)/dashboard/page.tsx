@@ -15,6 +15,7 @@ export default function Dashboard(){
     const [analytics, setAnalytics] = useState<any>(null);
     const [user, setUser] = useState<any>(null);
     const [budgetOverview, setBudgetOverview] = useState<any>([]);
+    const [expenses, setExpenses] = useState<any>([]);
 
     useEffect(() => {
 
@@ -22,17 +23,6 @@ export default function Dashboard(){
         try {
             const token = localStorage.getItem("token");
             if (!token) return;
-
-            const budgetResponse =
-                await fetch(
-                    "http://localhost:5000/budgets/overview",
-                    {
-                        headers: {
-                            Authorization:
-                            `Bearer ${token}`,
-                        },
-                    }
-                );
 
             const userResponse =
                 await fetch(
@@ -55,6 +45,28 @@ export default function Dashboard(){
                         },
                     }
                 );
+  
+            const budgetResponse =
+                await fetch(
+                    "http://localhost:5000/budgets/overview",
+                    {
+                        headers: {
+                            Authorization:
+                            `Bearer ${token}`,
+                        },
+                    }
+                );        
+                
+            const expensesResponse =
+                await fetch(
+                    "http://localhost:5000/expenses",
+                    {
+                        headers: {
+                        Authorization:
+                        `Bearer ${token}`,
+                        },
+                    }
+                );
 
             const userData =
                 await userResponse.json();
@@ -65,10 +77,8 @@ export default function Dashboard(){
             const budgetData =
                 await budgetResponse.json();
 
-            console.log(
-                "BUDGETS:",
-                budgetData
-            );
+            const expensesData =
+                await expensesResponse.json();
 
             console.log(
                 "USER:",
@@ -80,9 +90,15 @@ export default function Dashboard(){
                 analyticsData
             );
 
+            console.log(
+                "BUDGETS:",
+                budgetData
+            );
+
             setUser(userData);
             setAnalytics(analyticsData);
             setBudgetOverview(budgetData);
+            setExpenses(expensesData);
 
         } catch (error) {
 
@@ -97,32 +113,35 @@ export default function Dashboard(){
 
     const monthlySpendingOverTime = analytics?.monthlyBreakdown ?? [];
 
-    const recentTransactions = [
-    {
-        title: "Lunch",
-        amount: 1500,
-        category: "Food",
-        date: "May 27",
-    },
-    {
-        title: "Bus Fare",
-        amount: 1000,
-        category: "Transport",
-        date: "May 26",
-    },
-        {
-        title: "Dress",
-        amount: 500,
-        category: "Shopping",
-        date: "May 27",
-    },
-    {
-        title: "Uber",
-        amount: 3600,
-        category: "Transport",
-        date: "Jan 12",
-    },
-    ];
+    const recentTransactions =
+        expenses
+            .sort(
+                (a: any, b: any) =>
+                    new Date(
+                        b.createdAt
+                    ).getTime() -
+                    new Date(
+                        a.createdAt
+                    ).getTime()
+            )
+
+            .slice(0, 5)
+
+            .map((expense: any) => ({
+                title:
+                    expense.title,
+
+                amount:
+                    expense.amount,
+
+                category:
+                    expense.category,
+
+                date:
+                    new Date(
+                        expense.createdAt
+                    ).toLocaleDateString(),
+            }));
 
     return (
         <main className="main-content">
@@ -150,7 +169,7 @@ export default function Dashboard(){
                 <div className={styles.recents}><RecentTransactions
                     transactions={recentTransactions}
                 /></div>
-                <div className={styles.budget}><BudgetProgress/></div>
+                <div className={styles.budget}><BudgetProgress budgets={budgetOverview}/></div>
             </div>
 
         </main>
