@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import WelcomeCard from "@/components/dashboard/WelcomeCard";
 import QuickActions from "@/components/dashboard/QuickActions";
@@ -9,14 +12,90 @@ import RecentTransactions from "@/components/analytics/RecentTransactions";
 import BudgetProgress from "@/components/dashboard/BudgetProgress";
 
 export default function Dashboard(){
+    const [analytics, setAnalytics] = useState<any>(null);
+    const [user, setUser] = useState<any>(null);
+    const [budgetOverview, setBudgetOverview] = useState<any>([]);
 
-    const monthlySpendingOverTime = [
-        { date: "Jan", amount: 4000 },
-        { date: "Feb", amount: 3000 },
-        { date: "March", amount: 5000 },
-        { date: "Apr", amount: 2000 },
-        { date: "May", amount: 7000 },
-    ];
+    useEffect(() => {
+
+    const fetchDashboardData = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            const budgetResponse =
+                await fetch(
+                    "http://localhost:5000/budgets/overview",
+                    {
+                        headers: {
+                            Authorization:
+                            `Bearer ${token}`,
+                        },
+                    }
+                );
+
+            const userResponse =
+                await fetch(
+                    "http://localhost:5000/auth/me",
+                    {
+                        headers: {
+                            Authorization:
+                                `Bearer ${token}`,
+                        },
+                    }
+                );
+
+            const analyticsResponse =
+                await fetch(
+                    "http://localhost:5000/expenses/analytics",
+                    {
+                        headers: {
+                            Authorization:
+                                `Bearer ${token}`,
+                        },
+                    }
+                );
+
+            const userData =
+                await userResponse.json();
+
+            const analyticsData =
+                await analyticsResponse.json();
+
+            const budgetData =
+                await budgetResponse.json();
+
+            console.log(
+                "BUDGETS:",
+                budgetData
+            );
+
+            console.log(
+                "USER:",
+                userData
+            );
+
+            console.log(
+                "ANALYTICS:",
+                analyticsData
+            );
+
+            setUser(userData);
+            setAnalytics(analyticsData);
+            setBudgetOverview(budgetData);
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+    };
+
+    fetchDashboardData();
+
+}, []);
+
+    const monthlySpendingOverTime = analytics?.monthlyBreakdown ?? [];
 
     const recentTransactions = [
     {
@@ -56,11 +135,11 @@ export default function Dashboard(){
                 </div>
 
                 <section className={styles.dashboardHero}>
-                    <WelcomeCard/>
+                    <WelcomeCard user={user} analytics={analytics} />
                     <QuickActions/>
                 </section>
             </div>
-            <SummaryCards/>
+            <SummaryCards analytics={analytics} budgetOverview={budgetOverview}/>
 
             <h3 className={styles.title}>Spending Overview</h3>
             <div className={styles.lineChart}>
