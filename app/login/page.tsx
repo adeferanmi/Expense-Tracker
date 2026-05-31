@@ -9,10 +9,54 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Login attempt:", { email, password });
-  };
+const handleLogin = async (
+  e: FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
+
+  try {
+
+    const response = await fetch(
+      "http://localhost:5000/auth/login",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    );
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
+      alert(data.message);
+      return;
+    }
+
+    localStorage.setItem(
+      "token",
+      data.token
+    );
+
+    window.location.href =
+      "/dashboard";
+
+  } catch (error) {
+    console.error(error);
+
+    alert(
+      "Unable to connect to server"
+    );
+  }
+};
 
   return (
     <main className="auth-container">
