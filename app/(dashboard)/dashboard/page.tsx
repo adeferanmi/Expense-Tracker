@@ -111,7 +111,15 @@ export default function Dashboard(){
 
 }, []);
 
-    const monthlySpendingOverTime = analytics?.monthlyBreakdown ?? [];
+    const monthlySpendingOverTime =
+        analytics?.monthlyBreakdown?.map(
+            (item: any) => ({
+                date: item.month,
+                amount: item.amount,
+            })
+        ) ?? [];
+
+    console.log(monthlySpendingOverTime);
 
     const recentTransactions =
         expenses
