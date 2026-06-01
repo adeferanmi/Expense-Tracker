@@ -134,14 +134,66 @@ async function handleAddExpense(
   setIsModalOpen(true);
 }
 
-    function handleSave(updatedExpense: Expense) {
+async function handleSave(
+  updatedExpense: Expense
+) {
+  try {
+
+    const token =
+      localStorage.getItem("token");
+
+    if (!token) return;
+
+    const response =
+      await fetch(
+        `http://localhost:5000/expenses/${updatedExpense.id}`,
+        {
+          method: "PUT",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            Authorization:
+              `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({
+            title: updatedExpense.title,
+            amount: updatedExpense.amount,
+            category: updatedExpense.category,
+          }),
+        }
+      );
+
+    const savedExpense =
+      await response.json();
+
     setExpenses((prev) =>
-        prev.map((expense) =>
-        expense.id === updatedExpense.id
-            ? updatedExpense
-            : expense
-        )
+      prev.map((expense) =>
+        expense.id ===
+        savedExpense.id.toString()
+          ? {
+              id:
+                savedExpense.id.toString(),
+              title:
+                savedExpense.title,
+              amount:
+                savedExpense.amount,
+              category:
+                savedExpense.category,
+              date:
+                savedExpense.createdAt,
+            }
+          : expense
+      )
     );
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
 }
   return (
     <main className="main-content">
