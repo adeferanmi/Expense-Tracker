@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import AddExpenseForm from "@/components/update-expenses/AddExpenseForm";
 import styles from "./update-expenses.module.css";
@@ -17,56 +17,117 @@ type Expense = {
 };
 
 export default function ExpensesPage() {
-    const [expenses, setExpenses] = useState<Expense[]>([
-    {
-        id: "1",
-        title: "Groceries",
-        amount: 5000,
-        category: "Food",
-        date: "2026-05-30",
-    },
-    {
-        id: "2",
-        title: "Sneakers",
-        amount: 14000,
-        category: "Shopping",
-        date: "2026-01-04",
-    },
-    {
-        id: "3",
-        title: "Petrol",
-        amount: 10000,
-        category: "Transport",
-        date: "2026-01-04",
-    },     {
-        id: "4",
-        title: "Income Tax",
-        amount: 2510,
-        category: "Bills",
-        date: "2026-01-04",
-    },     {
-        id: "5",
-        title: "Electronics",
-        amount: 30000,
-        category: "Others",
-        date: "2024-11-04",
-    },     
-    ]);
+    const [expenses, setExpenses] = useState<Expense[]>([]);
+
+    useEffect(() => {
+
+        const fetchExpenses = async () => {
+
+            try {
+
+                const token =
+                localStorage.getItem("token");
+
+                if (!token) return;
+
+                const response =
+                    await fetch(
+                        "http://localhost:5000/expenses",
+                        {
+                            headers: {
+                            Authorization:
+                            `Bearer ${token}`,
+                        },
+                    }         
+                );
+
+                const data =
+                    await response.json();
+
+                    setExpenses(
+                        data.map((expense: any) => ({
+                            id: expense.id.toString(),
+                            title: expense.title,
+                            amount: expense.amount,
+                            category: expense.category,
+                            date: expense.createdAt,
+                        }))
+                        );
+
+                } catch (error) {
+
+                    console.error(error);
+
+                }
+            };
+
+    fetchExpenses();
+
+    }, []);
 
     const [selectedExpense, setSelectedExpense] =
         useState<Expense | null>(null);
 
     const [isModalOpen, setIsModalOpen] =
         useState(false);
+    
+async function handleAddExpense(
+  expense: Omit<Expense, "id">
+) {
 
-  function handleAddExpense(expense: Omit<Expense, "id">) {
-    const newExpense: Expense = {
-      id: crypto.randomUUID(),
-      ...expense,
-    };
+  console.log(expense);
+  try {
 
-    setExpenses((prev) => [newExpense, ...prev]);
+    const token =
+      localStorage.getItem("token");
+
+    if (!token) return;
+
+    const response =
+      await fetch(
+        "http://localhost:5000/expenses",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            Authorization:
+              `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({
+            title: expense.title,
+            amount: expense.amount,
+            category: expense.category,
+            date: expense.date,
+          })
+        }
+      );
+
+    const newExpense =
+      await response.json();
+
+    setExpenses((prev) => [
+
+      {
+        id: newExpense.id.toString(),
+        title: newExpense.title,
+        amount: newExpense.amount,
+        category: newExpense.category,
+        date: newExpense.createdAt,
+      },
+
+      ...prev,
+    ]);
+
+  } catch (error) {
+
+    console.error(error);
+
   }
+}
 
   function handleEdit(expense: Expense) {
   setSelectedExpense(expense);
