@@ -213,11 +213,41 @@ async function handleSave(
                 key={exp.id}
                 expense={exp}
                 onEdit={handleEdit}
-                onDelete={(id) =>
-                    setExpenses((prev) =>
-                    prev.filter((e) => e.id !== id)
-                    )
-                }
+                onDelete={async (id) => {
+
+                    try {
+
+                        const token =
+                        localStorage.getItem("token");
+
+                        if (!token) return;
+
+                        await fetch(
+                        `http://localhost:5000/expenses/${id}`,
+                        {
+                            method: "DELETE",
+
+                            headers: {
+                            Authorization:
+                                `Bearer ${token}`,
+                            },
+                        }
+                        );
+
+                        setExpenses((prev) =>
+                        prev.filter(
+                            (expense) =>
+                            expense.id !== id
+                        )
+                        );
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                    }
+
+                }}
                 />
             ))}
         </div>
