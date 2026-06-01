@@ -1,36 +1,70 @@
 "use client";
 
+import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 
-export default function Signup(){
-    return (
-        <main>
-            <h2>Sign Up</h2>
+export default function Signup() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-            <nav>
-                <Link href="/">Home</Link>
-                <Link href="/login">Login</Link>
-                <Link href="/signup">Signup</Link>
-            </nav>
+  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-            <form>
-                <div>
-                    <p>Full name: </p>
-                    <input type="text" placeholder="Enter your full name"/>
-                </div>
-                <div>
-                    <p>Email: </p>
-                    <input type="email" placeholder="example@mail.com"/>
-                </div>
-                <div>
-                    <p>Password: </p>
-                    <input type="password" placeholder="Enter a password"/>
-                </div>
+    console.log("Signup attempt:", {
+      fullName,
+      email,
+      password,
+    });
+  };
 
-                <button type="submit">Sign Up</button>
-            </form>
+  return (
+    <main className="auth-container">
+      <div className="auth-card">
+        <h2 className="auth-title">Join Us</h2>
 
-            <p>Already have an account? <Link href="/login">Login</Link></p>
-        </main>
-    );
+        <Image src="/favicon.png" alt="App Logo" width={60}height={60} className="auth-logo"/>
+
+        <p>Create your account to continue:</p>
+
+        <form className="auth-form" onSubmit={handleSignup}>
+          <input
+            className="auth-input"
+            type="text"
+            placeholder="Full name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+
+          <input
+            className="auth-input"
+            type="email"
+            placeholder="Example@mail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <input
+            className="auth-input"
+            type="password"
+            placeholder="Enter a password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button className="auth-button" type="submit">
+            Sign Up
+          </button>
+        </form>
+
+        <p>
+          Already have an account?{" "}
+          <Link className="auth-link" href="/">
+            Login
+          </Link>
+        </p>
+      </div>
+    </main>
+  );
 }

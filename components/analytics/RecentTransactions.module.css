@@ -1,0 +1,47 @@
+.transactionsCard {
+  margin-top: 2rem;
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid #db2777;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #db2777;
+}
+
+.viewAllButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: transparent;
+  color: #db2777;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.viewAllButton:hover {
+  color: #db2777;
+  transform: translateX(2px);
+}
+
+.transactionList {
+  display: flex;
+  flex-direction: column;
+}
+
+.viewAllLink {
+  text-decoration: none;
+}

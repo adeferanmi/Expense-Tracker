@@ -1,0 +1,54 @@
+.quickActionsCard {
+  background: white;
+  border: 1.5px solid #db2777;
+  border-radius: 24px;
+  padding: 24px;
+  min-width: 300px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+}
+
+.heading {
+  margin: 0 0 20px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.actionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.actionTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 20px;
+  border-radius: 18px;
+  background: #f8fafc;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.actionTile:hover {
+  transform: translateY(-4px);
+  background: #fdf2f8;
+  box-shadow: 0 8px 20px rgba(219, 39, 119, 0.12);
+}
+
+.icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
