@@ -1,0 +1,23 @@
+
+.chartCard {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px #db2777 solid;
+  padding: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
+}
+
+.chartCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(219, 39, 119, 0.08);
+  box-shadow: 0 12px 28px rgba(219, 39, 119, 0.12);
+}
+
+.chartTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f472b6;
+  margin-bottom: 1rem;
+  letter-spacing: 0.2px;
+}

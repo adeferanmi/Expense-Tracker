@@ -9,15 +9,45 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+async function handleSignup(
+  e: React.FormEvent<HTMLFormElement>
+) {
+  e.preventDefault();
 
-    console.log("Signup attempt:", {
-      fullName,
-      email,
-      password,
-    });
-  };
+  try {
+
+    const response =
+      await fetch(
+        "http://localhost:5000/auth/register",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+            name: fullName,
+            email,
+            password,
+          }),
+        }
+      );
+
+    const data =
+      await response.json();
+
+    console.log(data);
+
+    window.location.href = "/login";
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+}
 
   return (
     <main className="auth-container">

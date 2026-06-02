@@ -1,8 +1,9 @@
 const prisma = require("../prisma");
 
 const createExpense = async (req, res, next) => {
+  console.log(req.body);
   try {
-    const { title, amount, category, isRecurring, recurringInterval, } = req.body;
+    const { title, amount, category, date, isRecurring, recurringInterval, } = req.body;
 
     const userId = req.user.userId;
 
@@ -11,6 +12,9 @@ const createExpense = async (req, res, next) => {
         title,
         amount,
         category,
+          createdAt: date
+            ? new Date(date)
+            : undefined,
         isRecurring,
         recurringInterval,
 
@@ -21,6 +25,8 @@ const createExpense = async (req, res, next) => {
         },
       },
     });
+
+    console.log(expense.createdAt);
 
     res.status(201).json(expense);
   } catch (error) {
@@ -35,7 +41,7 @@ const getExpenses = async (req, res, next) => {
       category,
       minAmount,
       page = 1,
-      limit = 5,
+      limit = 100,
       sort = "desc",
       search,
       startDate,
