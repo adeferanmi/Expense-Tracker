@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "test":"jest"
+    "lint": "eslint"
   },
   "dependencies": {
     "next": "^16.2.7",
@@ -23,25 +22,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
-    "jest": "^30.4.2",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "description": "A clean and intuitive web application to help you track your daily expenses, manage budgets, and gain insights into your spending habits.",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/adeferanmi/Expense-Tracker.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/adeferanmi/Expense-Tracker/issues"
-  },
-  "homepage": "https://github.com/adeferanmi/Expense-Tracker#readme"
+  }
 }
