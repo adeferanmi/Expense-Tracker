@@ -1,6 +1,16 @@
 # Expense Tracker
+A clean and intuitive web application to help you track your daily expenses, manage budgets, and gain insights into your spending habits.
 
-Full-stack expense tracking application built for CSC 202 Group Project.
+A full-stack expense tracking application built for CSC 202 Group Project.
+
+---
+# Features
+- Add + manage expenses: log all your expenses, from food to tech with the amount detailed.
+- Profiles: create your own personal profile by signing up, allowing you data to remain safe and intact.
+- View expenses: view all your expenses as a detailed list, giving insight on your spending habits.
+- Search: feeling lost? use the search bar to find specific expenses.
+
+more tbd
 
 ---
 
