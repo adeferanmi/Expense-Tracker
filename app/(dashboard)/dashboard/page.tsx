@@ -59,7 +59,7 @@ export default function Dashboard(){
                 
             const expensesResponse =
                 await fetch(
-                    `http://localhost:5000/expenses`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/expenses`,
                     {
                         headers: {
                         Authorization:
