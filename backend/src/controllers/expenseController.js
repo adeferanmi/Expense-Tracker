@@ -41,7 +41,7 @@ const getExpenses = async (req, res, next) => {
       category,
       minAmount,
       page = 1,
-      limit = 5,
+      limit = 100,
       sort = "desc",
       search,
       startDate,

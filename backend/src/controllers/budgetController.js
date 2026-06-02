@@ -28,6 +28,23 @@ const createBudget = async (req, res, next) => {
   }
 };
 
+const getBudgets = async (req, res, next) => {
+  try {
+
+    const budgets =
+      await prisma.budget.findMany({
+        where: {
+          userId: req.user.userId,
+        },
+      });
+
+    res.json(budgets);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getBudgetOverview = async (req, res, next) => {
   try {
 
@@ -61,19 +78,19 @@ const getBudgetOverview = async (req, res, next) => {
 
       const remaining = budget.limit - spent;
 
+      const status =
+        remaining < 0
+          ? "OVER_BUDGET"
+          : "SAFE";
+
       return {
+        id: budget.id,
         category: budget.category,
-
         budget: budget.limit,
-
         spent,
-
         remaining,
-
-        status:
-          remaining < 0
-            ? "OVER_BUDGET"
-            : "SAFE",
+        status,
+        month: budget.month,
       };
     });
 
@@ -84,7 +101,50 @@ const getBudgetOverview = async (req, res, next) => {
   }
 };
 
+const updateBudget = async (req, res, next) => {
+  try {
+
+    const { id } = req.params;
+
+    const budget = await prisma.budget.update({
+      where: {
+        id: Number(id),
+      },
+
+      data: req.body,
+    });
+
+    res.json(budget);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteBudget = async (req, res, next) => {
+  try {
+
+    const { id } = req.params;
+
+    await prisma.budget.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    res.json({
+      message: "Budget deleted",
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createBudget,
+  getBudgets,
   getBudgetOverview,
+  updateBudget,
+  deleteBudget,
 };
