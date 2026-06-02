@@ -20,7 +20,7 @@ export default function Budgets(){
         const token = localStorage.getItem("token");
 
         const res = await fetch(
-            "http://localhost:5000/budgets/overview",
+            `${process.env.NEXT_PUBLIC_API_URL}/budgets/overview`,
             {
             headers: {
             Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export default function Budgets(){
         await Promise.all(
             data.map((budget) =>
             fetch(
-                `http://localhost:5000/budgets/${budget.id}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/budgets/${budget.id}`,
                 {
                 method: "PUT",
                 headers: {
