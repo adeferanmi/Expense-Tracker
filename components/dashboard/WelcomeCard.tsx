@@ -13,14 +13,18 @@ export default function WelcomeCard({user, analytics}: WelcomeCardProps) {
   return (
     <div className={styles.welcomeCard}>
       <div className={styles.welcomeText}>
-        <h1 className={styles.welcomeTitle}>Hi, {user?.email ?? "there"} 👋</h1>
+        <h1 className={styles.welcomeTitle}>Hi, {user?.name ?? "there"} 👋</h1>
 
         <p className={styles.welcomeSubtitle}>
           What do your expenses look like today?
         </p>
 
         <p className={styles.welcomeInsight}>
-          You have spent <span className={styles.highlight}> {" "} ₦{analytics?.overview?.totalExpenses ?? 0} </span>
+          You have spent{" "}
+          <span className={styles.highlight}>
+            ₦{(analytics?.overview?.totalExpenses ?? 0).toLocaleString()}
+          </span>{" "}
+          this month.
         </p>
       </div>
 
