@@ -25,7 +25,7 @@ export default function Analytics(){
 
             const expensesResponse =
                 await fetch(
-                    "http://localhost:5000/expenses?limit=5",
+                    `${process.env.NEXT_PUBLIC_API_URL}/expenses?limit=5`,
                     {
                     headers: {
                         Authorization:
@@ -41,7 +41,7 @@ export default function Analytics(){
 
             const response =
                 await fetch(
-                "http://localhost:5000/expenses/analytics",
+                `${process.env.NEXT_PUBLIC_API_URL}/expenses/analytics`,
                 {
                     headers: {
                     Authorization:

@@ -61,7 +61,7 @@ export default function BudgetModal({
         data.map((budget) =>
 
           fetch(
-            `http://localhost:5000/budgets/${budget.id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/budgets/${budget.id}`,
             {
               method: "PUT",
 

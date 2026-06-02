@@ -32,7 +32,7 @@ export default function ExpensesPage() {
 
                 const response =
                     await fetch(
-                        "http://localhost:5000/expenses",
+                        `${process.env.NEXT_PUBLIC_API_URL}/expenses`,
                         {
                             headers: {
                             Authorization:
@@ -85,7 +85,7 @@ async function handleAddExpense(
 
     const response =
       await fetch(
-        "http://localhost:5000/expenses",
+        `${process.env.NEXT_PUBLIC_API_URL}/expenses`,
         {
           method: "POST",
 
@@ -146,7 +146,7 @@ async function handleSave(
 
     const response =
       await fetch(
-        `http://localhost:5000/expenses/${updatedExpense.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/expenses/${updatedExpense.id}`,
         {
           method: "PUT",
 
@@ -223,7 +223,7 @@ async function handleSave(
                         if (!token) return;
 
                         await fetch(
-                        `http://localhost:5000/expenses/${id}`,
+                        `${process.env.NEXT_PUBLIC_API_URL}/expenses/${id}`,
                         {
                             method: "DELETE",
 
