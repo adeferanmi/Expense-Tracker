@@ -26,7 +26,7 @@ export default function Dashboard(){
 
             const userResponse =
                 await fetch(
-                    "http://localhost:5000/auth/me",
+                    `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
                     {
                         headers: {
                             Authorization:
@@ -37,7 +37,7 @@ export default function Dashboard(){
 
             const analyticsResponse =
                 await fetch(
-                    "http://localhost:5000/expenses/analytics",
+                    `${process.env.NEXT_PUBLIC_API_URL}/expenses/analytics`,
                     {
                         headers: {
                             Authorization:
@@ -48,7 +48,7 @@ export default function Dashboard(){
   
             const budgetResponse =
                 await fetch(
-                    "http://localhost:5000/budgets/overview",
+                    `${process.env.NEXT_PUBLIC_API_URL}/budgets/overview`,
                     {
                         headers: {
                             Authorization:
@@ -59,7 +59,7 @@ export default function Dashboard(){
                 
             const expensesResponse =
                 await fetch(
-                    "http://localhost:5000/expenses",
+                    `http://localhost:5000/expenses`,
                     {
                         headers: {
                         Authorization:
