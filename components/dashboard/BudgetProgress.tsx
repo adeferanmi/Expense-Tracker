@@ -2,20 +2,18 @@
 
 import styles from "./BudgetProgress.module.css";
 
-const budgets = [
-  { category: "Food", used: 80000, total: 100000 },
-  { category: "Transport", used: 30000, total: 60000 },
-  { category: "Shopping", used: 145000, total: 150000 },
-];
+interface BudgetProgressProps {
+  budgets: any[];
+}
 
-export default function BudgetProgress() {
+export default function BudgetProgress({ budgets }: BudgetProgressProps) {
   return (
     <div className={styles.card}>
       <h2 className={styles.title}>Budget Progress</h2>
 
       <div className={styles.list}>
         {budgets.map((item) => {
-          const percent = (item.used / item.total) * 100;
+          const percent = (item.spent / item.budget) * 100;
 
           let status = "safe";
           if (percent >= 100) status = "over";
@@ -27,8 +25,8 @@ export default function BudgetProgress() {
                 <span className={styles.category}>{item.category}</span>
 
                 <span className={styles.amount}>
-                  ₦{item.used.toLocaleString()} / ₦
-                  {item.total.toLocaleString()}
+                  ₦{item.spent.toLocaleString()} / ₦
+                  {item.budget.toLocaleString()}
                 </span>
               </div>
 

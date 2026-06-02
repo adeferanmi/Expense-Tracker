@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import styles from "./BudgetModal.module.css";
 
 type Category = {
-  name: string;
-  limit: number;
+  id: number;
+  category: string;
+  budget: number;
+  month: string;
 };
 
 type BudgetType = "weekly" | "monthly";
@@ -44,18 +46,59 @@ export default function BudgetModal({
 
   const updateLimit = (index: number, value: number) => {
     const updated = [...data];
-    updated[index].limit = value;
+    updated[index].budget = value;
     setData(updated);
   };
+  const handleSave = async () => {
 
-  const handleSave = () => {
-    if (viewType === "weekly") {
-      onSaveWeekly(data);
-    } else {
-      onSaveMonthly(data);
+    const token =
+      localStorage.getItem("token");
+
+    try {
+
+      await Promise.all(
+
+        data.map((budget) =>
+
+          fetch(
+            `http://localhost:5000/budgets/${budget.id}`,
+            {
+              method: "PUT",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+
+                Authorization:
+                  `Bearer ${token}`,
+              },
+
+              body: JSON.stringify({
+                category:
+                  budget.category,
+
+                limit:
+                  budget.budget,
+
+                month:
+                  budget.month,
+              }),
+            }
+          )
+
+        )
+
+      );
+
+      onClose();
+
+      window.location.reload();
+
+    } catch (error) {
+
+      console.error(error);
+
     }
-
-    onClose();
   };
 
   return (
@@ -88,12 +131,12 @@ export default function BudgetModal({
 
         <div className={styles.list}>
           {data.map((item, index) => (
-            <div key={item.name} className={styles.row}>
-              <span>{item.name}</span>
+            <div key={item.id} className={styles.row}>
+              <span>{item.category}</span>
 
               <input
                 type="number"
-                value={item.limit}
+                value={item.budget}
                 onChange={(e) =>
                   updateLimit(index, Number(e.target.value))
                 }

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import OverallBudgetHealth from "@/components/budgets/OverallBudgetHealth";
 import BudgetSummaryCard from "@/components/budgets/BudgetSummaryCard";
@@ -13,17 +13,57 @@ export default function Budgets(){
     const [modalOpen, setModalOpen] = useState(false);
     const [modalType, setModalType] = useState<"weekly" | "monthly">("weekly");
 
-    const [weeklyBudgets, setWeeklyBudgets] = useState([
-    { name: "Food", limit: 20000 },
-    { name: "Transport", limit: 15000 },
-    { name: "Shopping", limit: 20000 }
-    ]);
+    const [budgets, setBudgets] = useState<any[]>([]);
 
-    const [monthlyBudgets, setMonthlyBudgets] = useState([
-    { name: "Food", limit: 80000 },
-    { name: "Transport", limit: 60000 },
-    { name: "Shopping", limit: 50000 }
-    ]);
+    const fetchBudgets = async () => {
+
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(
+            "http://localhost:5000/budgets/overview",
+            {
+            headers: {
+            Authorization: `Bearer ${token}`,
+            },
+            }
+        );
+
+        const data = await res.json();
+
+        setBudgets(data);
+    }
+
+    useEffect(() => {
+        fetchBudgets();
+    }, []);
+
+    console.log("BUDGETS", budgets);
+
+    const handleBudgetSave = async (data: any[]) => {
+        const token = localStorage.getItem("token");
+
+        await Promise.all(
+            data.map((budget) =>
+            fetch(
+                `http://localhost:5000/budgets/${budget.id}`,
+                {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    category: budget.category,
+                    limit: budget.budget,
+                    month: budget.month,
+                }),
+                }
+            )
+            )
+        );
+
+        fetchBudgets();
+        };
 
     return (
         <main className="main-content">
@@ -43,18 +83,30 @@ export default function Budgets(){
                 <BudgetModal
                     isOpen={modalOpen}
                     onClose={() => setModalOpen(false)}
-                    weeklyData={weeklyBudgets}
-                    monthlyData={monthlyBudgets}
-                    onSaveWeekly={(data) => setWeeklyBudgets(data)}
-                    onSaveMonthly={(data) => setMonthlyBudgets(data)}
+                    weeklyData={budgets}
+                    monthlyData={budgets}
+                    onSaveWeekly={handleBudgetSave}
+                    onSaveMonthly={handleBudgetSave}
                 />
             </div>
 
             <Navbar/>
 
             <OverallBudgetHealth
-                totalBudget={200000}
-                spent={82000}
+                totalBudget={
+                    budgets.reduce(
+                    (sum, budget) =>
+                        sum + budget.budget,
+                    0
+                    )
+                }
+                spent={
+                    budgets.reduce(
+                    (sum, budget) =>
+                        sum + budget.spent,
+                    0
+                    )
+                }
             />
 
 
@@ -62,42 +114,35 @@ export default function Budgets(){
                 <BudgetSummaryCard
                     title="Weekly Budget"
                     subtitle="Track your spending this week"
-                    categories={[
-                        { name: "Food", spent: 14000, limit: 20000 },
-                        { name: "Transport", spent: 5000, limit: 15000 },
-                        { name: "Shopping", spent: 18000, limit: 20000 },
-                    ]}
+                    categories={budgets.map((budget) => ({
+                        name: budget.category,
+                        spent: budget.spent,
+                        limit: budget.budget,
+                    }))}
                 />
 
                 <BudgetSummaryCard
                     title="Monthly Budget"
                     subtitle="Track your spending this month"
-                    categories={[
-                        { name: "Food", spent: 31000, limit: 60000 },
-                        { name: "Transport", spent: 31000, limit: 30000 },
-                        { name: "Shopping", spent: 45000, limit: 50000 },
-                    ]}
+                    categories={budgets.map((budget) => ({
+                        name: budget.category,
+                        spent: budget.spent,
+                        limit: budget.budget,
+                    }))}
                 />
             </div>
 
             <section className={styles.analyticsGrid}>
-                <BudgetChartCard
-                    category="Food"
-                    spent={14000}
-                    limit={20000}
-                />
+                {budgets.map((budget) => (
 
-                <BudgetChartCard
-                    category="Shopping"
-                    spent={18000}
-                    limit={20000}
-                />
+                    <BudgetChartCard
+                        key={budget.id}
+                        category={budget.category}
+                        spent={budget.spent}
+                        limit={budget.budget}
+                    />
 
-                <BudgetChartCard
-                    category="Transport"
-                    spent={5000}
-                    limit={15000}
-                />
+                ))}
             </section>
         </main>
     );
