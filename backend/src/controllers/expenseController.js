@@ -145,7 +145,7 @@ const updateExpense = async (req, res, next) => {
 
     const userId = req.user.userId;
 
-    const { title, amount, category } = req.body;
+    const { title, amount, category, date } = req.body;
 
     const existingExpense =
       await prisma.expense.findFirst({
@@ -171,6 +171,9 @@ const updateExpense = async (req, res, next) => {
           title,
           amount,
           category,
+          createdAt: date
+            ? new Date(date)
+            : existingExpense.createdAt,
         },
       });
 
@@ -221,7 +224,21 @@ const getExpenseAnalytics = async (
         where: {
           userId,
         },
+
+        orderBy: {
+          createdAt: "desc",
+        },
       });
+
+    const recentTransactions =
+      expenses
+        .slice(0, 5)
+        .map((expense) => ({
+          title: expense.title,
+          amount: expense.amount,
+          category: expense.category,
+          date: expense.createdAt,
+        }));
 
     // OVERVIEW
 
@@ -270,8 +287,49 @@ const getExpenseAnalytics = async (
         })
       );
 
-    // MONTHLY BREAKDOWN
+    // WEEKLY BREAKDOWN
 
+    const weeklyMap = {};
+
+    const oneWeekAgo = new Date();
+
+    oneWeekAgo.setDate(
+      oneWeekAgo.getDate() - 7
+    );
+
+    expenses.forEach((expense) => {
+
+      const expenseDate =
+        new Date(expense.createdAt);
+
+      if (expenseDate >= oneWeekAgo) {
+
+        const day =
+          expenseDate.toLocaleString(
+            "default",
+            {
+              weekday: "short",
+            }
+          );
+
+        if (!weeklyMap[day]) {
+          weeklyMap[day] = 0;
+        }
+
+        weeklyMap[day] += expense.amount;
+      }
+    });
+
+    const weeklyBreakdown =
+      Object.entries(weeklyMap).map(
+        ([day, amount]) => ({
+          day,
+          amount,
+        })
+      );
+
+    // MONTHLY BREAKDOWN
+    
     const monthlyMap = {};
 
     expenses.forEach((expense) => {
@@ -308,7 +366,11 @@ const getExpenseAnalytics = async (
 
       categoryBreakdown,
 
+      weeklyBreakdown,
+
       monthlyBreakdown,
+
+      recentTransactions,
     });
 
   } catch (error) {
