@@ -391,9 +391,9 @@ const getExpenseAnalytics = async (
 
       categoryBreakdown,
 
-      weeklyBreakdown,
-
       weeklyCategoryBreakdown,
+
+      weeklyBreakdown,
 
       monthlyBreakdown,
 
