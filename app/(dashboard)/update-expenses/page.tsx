@@ -50,7 +50,7 @@ export default function ExpensesPage() {
                             title: expense.title,
                             amount: expense.amount,
                             category: expense.category,
-                            date: expense.createdAt,
+                            date: expense.createdAt.split("T")[0],
                         }))
                         );
 
@@ -116,7 +116,7 @@ async function handleAddExpense(
         title: newExpense.title,
         amount: newExpense.amount,
         category: newExpense.category,
-        date: newExpense.createdAt,
+        date: newExpense.createdAt.split("T")[0],
       },
 
       ...prev,
@@ -184,7 +184,7 @@ async function handleSave(
               category:
                 savedExpense.category,
               date:
-                savedExpense.createdAt,
+                savedExpense.createdAt.split("T")[0],
             }
           : expense
       )
