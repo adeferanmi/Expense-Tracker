@@ -162,6 +162,7 @@ async function handleSave(
             title: updatedExpense.title,
             amount: updatedExpense.amount,
             category: updatedExpense.category,
+            date: updatedExpense.date,
           }),
         }
       );

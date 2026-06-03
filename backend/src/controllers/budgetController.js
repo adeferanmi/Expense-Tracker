@@ -50,11 +50,43 @@ const getBudgetOverview = async (req, res, next) => {
 
     const userId = req.user.userId;
 
-    const budgets = await prisma.budget.findMany({
+    let budgets = await prisma.budget.findMany({
       where: {
         userId,
       },
     });
+
+    if (budgets.length === 0) {
+
+      await prisma.budget.createMany({
+        data: [
+          {
+            category: "Food",
+            limit: 0,
+            month: "Current",
+            userId,
+          },
+          {
+            category: "Transport",
+            limit: 0,
+            month: "Current",
+            userId,
+          },
+          {
+            category: "Shopping",
+            limit: 0,
+            month: "Current",
+            userId,
+          },
+        ],
+      });
+
+      budgets = await prisma.budget.findMany({
+        where: {
+          userId,
+        },
+      });
+    }
 
     const expenses = await prisma.expense.findMany({
       where: {
