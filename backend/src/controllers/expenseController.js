@@ -291,62 +291,53 @@ const getExpenseAnalytics = async (
 
     const weeklyMap = {};
 
-    const oneWeekAgo = new Date();
+    const today = new Date();
 
-    oneWeekAgo.setDate(
-      oneWeekAgo.getDate() - 7
-    );
+    today.setHours(23, 59, 59, 999);
+
+    const sixDaysAgo = new Date(today);
+
+    sixDaysAgo.setDate(today.getDate() - 6);
 
     expenses.forEach((expense) => {
 
-      const expenseDate =
-        new Date(expense.createdAt);
+      const expenseDate = new Date(expense.createdAt);
 
-      if (expenseDate >= oneWeekAgo) {
+      if (
+        expenseDate >= sixDaysAgo &&
+        expenseDate <= today
+      ) {
 
-        const dateKey =
-          expenseDate
-            .toISOString()
-            .split("T")[0];
+        const day = expenseDate
+          .toISOString()
+          .split("T")[0];
 
-        const label =
-          expenseDate.toLocaleString(
-            "default",
-            {
-              weekday: "short",
-            }
-          );
-
-        if (!weeklyMap[dateKey]) {
-
-          weeklyMap[dateKey] = {
-            day: dateKey,
-            label,
-            amount: 0,
-          };
-
+        if (!weeklyMap[day]) {
+          weeklyMap[day] = 0;
         }
 
-        weeklyMap[dateKey].amount +=
-          expense.amount;
+        weeklyMap[day] += expense.amount;
       }
     });
 
     const weeklyBreakdown =
-      Object.values(weeklyMap).sort(
-        (a, b) =>
-          new Date(a.day) -
-          new Date(b.day)
+      Object.entries(weeklyMap).map(
+        ([day, amount]) => ({
+          day,
+          amount,
+        })
       );
 
     const weeklyCategoryMap = {};
 
     expenses.forEach((expense) => {
 
-      const expenseDate =
-        new Date(expense.createdAt);
+      const expenseDate = new Date(expense.createdAt);
 
-      if (expenseDate >= oneWeekAgo) {
+      if (
+        expenseDate >= sixDaysAgo &&
+        expenseDate <= today
+      ) {
 
         if (!weeklyCategoryMap[expense.category]) {
           weeklyCategoryMap[expense.category] = 0;
