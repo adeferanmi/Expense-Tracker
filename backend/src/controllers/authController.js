@@ -32,6 +32,29 @@ const registerUser = async (req, res, next) => {
       },
     });
 
+    await prisma.budget.createMany({
+      data: [
+        {
+          category: "Food",
+          limit: 0,
+          month: "Current",
+          userId: user.id,
+        },
+        {
+          category: "Transport",
+          limit: 0,
+          month: "Current",
+          userId: user.id,
+        },
+        {
+          category: "Shopping",
+          limit: 0,
+          month: "Current",
+          userId: user.id,
+        },
+      ],
+    });
+
     res.status(201).json({
       message: "User registered successfully",
       user,
