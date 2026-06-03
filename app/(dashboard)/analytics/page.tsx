@@ -55,7 +55,10 @@ export default function Analytics(){
     const weeklySpendingOverTime =
         analytics?.weeklyBreakdown?.map(
             (item: any) => ({
-                date: item.label,
+                date: new Date(item.day)
+                    .toLocaleDateString("en-US", {
+                        weekday: "short",
+                    }),
                 amount: item.amount,
             })
         ) ?? [];
