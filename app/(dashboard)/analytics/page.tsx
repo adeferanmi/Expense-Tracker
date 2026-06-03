@@ -10,7 +10,6 @@ import RecentTransactions from "@/components/analytics/RecentTransactions";
 
 export default function Analytics(){
     const [analytics, setAnalytics] = useState<any>(null);
-    const [recentTransactions, setRecentTransactions] = useState([]);
 
     useEffect(() => {
 
@@ -22,22 +21,6 @@ export default function Analytics(){
                 localStorage.getItem("token");
 
             if (!token) return;
-
-            const expensesResponse =
-                await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/expenses?limit=5`,
-                    {
-                    headers: {
-                        Authorization:
-                        `Bearer ${token}`,
-                    },
-                    }
-                );
-
-                const expensesData =
-                await expensesResponse.json();
-
-                setRecentTransactions(expensesData);
 
             const response =
                 await fetch(
@@ -69,13 +52,13 @@ export default function Analytics(){
 
     }, []);
 
-    const weeklySpendingOverTime = [
-        { date: "Mon", amount: 4000 },
-        { date: "Tue", amount: 3000 },
-        { date: "Wed", amount: 5000 },
-        { date: "Thu", amount: 2000 },
-        { date: "Fri", amount: 7000 },
-    ];
+    const weeklySpendingOverTime =
+        analytics?.weeklyBreakdown?.map(
+            (item: any) => ({
+                date: item.day,
+                amount: item.amount,
+            })
+        ) ?? [];
     const monthlySpendingOverTime =
         analytics?.monthlyBreakdown?.map(
             (item: any) => ({
@@ -83,11 +66,13 @@ export default function Analytics(){
             amount: item.amount,
             })
         ) ?? [];
-    const weeklyCategoryData = [
-        { name: "Food", value: 12000 },
-        { name: "Transport", value: 5000 },
-        { name: "Shopping", value: 8000 },
-    ];
+    const weeklyCategoryData =
+        analytics?.categoryBreakdown?.map(
+            (item: any) => ({
+                name: item.category,
+                value: item.amount,
+            })
+        ) ?? [];
     const monthlyCategoryData =
         analytics?.categoryBreakdown?.map(
             (item: any) => ({
@@ -133,16 +118,16 @@ export default function Analytics(){
 
             <RecentTransactions
                 transactions={
-                    recentTransactions.map(
-                    (expense: any) => ({
-                        title: expense.title,
-                        amount: expense.amount,
-                        category: expense.category,
-                        date: new Date(
-                        expense.createdAt
-                        ).toLocaleDateString(),
-                    })
-                    )
+                    analytics?.recentTransactions?.map(
+                        (expense: any) => ({
+                            title: expense.title,
+                            amount: expense.amount,
+                            category: expense.category,
+                            date: new Date(
+                                expense.date
+                            ).toLocaleDateString(),
+                        })
+                    ) ?? []
                 }
             />
 
