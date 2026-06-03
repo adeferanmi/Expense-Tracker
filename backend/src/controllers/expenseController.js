@@ -304,7 +304,12 @@ const getExpenseAnalytics = async (
 
       if (expenseDate >= oneWeekAgo) {
 
-        const day =
+        const dateKey =
+          expenseDate
+            .toISOString()
+            .split("T")[0];
+
+        const label =
           expenseDate.toLocaleString(
             "default",
             {
@@ -312,20 +317,26 @@ const getExpenseAnalytics = async (
             }
           );
 
-        if (!weeklyMap[day]) {
-          weeklyMap[day] = 0;
+        if (!weeklyMap[dateKey]) {
+
+          weeklyMap[dateKey] = {
+            day: dateKey,
+            label,
+            amount: 0,
+          };
+
         }
 
-        weeklyMap[day] += expense.amount;
+        weeklyMap[dateKey].amount +=
+          expense.amount;
       }
     });
 
     const weeklyBreakdown =
-      Object.entries(weeklyMap).map(
-        ([day, amount]) => ({
-          day,
-          amount,
-        })
+      Object.values(weeklyMap).sort(
+        (a, b) =>
+          new Date(a.day) -
+          new Date(b.day)
       );
 
     const weeklyCategoryMap = {};
