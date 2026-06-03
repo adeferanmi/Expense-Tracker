@@ -27,7 +27,14 @@ export default function EditExpenseModal({
   const [formData, setFormData] = useState<Expense | null>(expense);
 
   useEffect(() => {
-    setFormData(expense);
+    if (!expense) return;
+
+    setFormData({
+      ...expense,
+      date: expense.date
+        ? expense.date.split("T")[0]
+        : "",
+    });
   }, [expense]);
 
   if (!isOpen || !formData) return null;
