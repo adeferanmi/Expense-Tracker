@@ -24,7 +24,7 @@ This document logs the core REST API endpoints that connect our frontend dashboa
 
 ## 2. Expense Endpoints
 
-### `POST/api/expenses`
+### `POSTgit/api/expenses`
 *   **Description:** Creates a new expense entry for the authenticated user.
 *   **Headers:** `Authorization: Bearer <token>`
 *   **Request Body:**
