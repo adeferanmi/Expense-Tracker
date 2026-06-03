@@ -78,10 +78,17 @@ const getBudgetOverview = async (req, res, next) => {
 
       const remaining = budget.limit - spent;
 
-      const status =
-        remaining < 0
-          ? "OVER_BUDGET"
-          : "SAFE";
+      let status = "SAFE";
+
+      if (spent >= budget.limit) {
+        status = "OVER_BUDGET";
+      }
+      else if (spent >= budget.limit * 0.8) {
+        status = "NEAR_LIMIT";
+      }
+      else if (spent >= budget.limit * 0.5) {
+        status = "CAUTION";
+      }
 
       return {
         id: budget.id,

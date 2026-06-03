@@ -95,16 +95,16 @@ export default function Budgets(){
             <OverallBudgetHealth
                 totalBudget={
                     budgets.reduce(
-                    (sum, budget) =>
-                        sum + budget.budget,
-                    0
+                        (sum, budget) =>
+                            sum + budget.budget,
+                        0
                     )
                 }
                 spent={
                     budgets.reduce(
-                    (sum, budget) =>
-                        sum + budget.spent,
-                    0
+                        (sum, budget) =>
+                            sum + budget.spent,
+                        0
                     )
                 }
             />
