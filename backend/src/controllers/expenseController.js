@@ -328,6 +328,31 @@ const getExpenseAnalytics = async (
         })
       );
 
+    const weeklyCategoryMap = {};
+
+    expenses.forEach((expense) => {
+
+      const expenseDate =
+        new Date(expense.createdAt);
+
+      if (expenseDate >= oneWeekAgo) {
+
+        if (!weeklyCategoryMap[expense.category]) {
+          weeklyCategoryMap[expense.category] = 0;
+        }
+
+        weeklyCategoryMap[expense.category] += expense.amount;
+      }
+    });
+
+    const weeklyCategoryBreakdown =
+      Object.entries(weeklyCategoryMap).map(
+        ([category, amount]) => ({
+          category,
+          amount,
+        })
+      );
+
     // MONTHLY BREAKDOWN
     
     const monthlyMap = {};
@@ -367,6 +392,8 @@ const getExpenseAnalytics = async (
       categoryBreakdown,
 
       weeklyBreakdown,
+
+      weeklyCategoryBreakdown,
 
       monthlyBreakdown,
 

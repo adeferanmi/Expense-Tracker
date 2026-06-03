@@ -67,10 +67,10 @@ export default function Analytics(){
             })
         ) ?? [];
     const weeklyCategoryData =
-        analytics?.categoryBreakdown?.map(
+        analytics?.weeklyCategoryBreakdown?.map(
             (item: any) => ({
-                name: item.category,
-                value: item.amount,
+            name: item.category,
+            value: item.amount,
             })
         ) ?? [];
     const monthlyCategoryData =
